@@ -12,7 +12,20 @@
 
 </head>
 <body>
-    <h2> The Online Cookbook </h2>
+<nav>
+    <div class="nav-wrapper navbar-fixed">
+      <a href="#!" class="brand-logo">The Online Cookbook</a>
+      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="{{ url_for('addrecipe')}}">Add Recipe</a></li>
+        
+      </ul>
+    </div>
+  </nav>
+
+  <ul class="sidenav navbar-fixed" id="mobile-demo">
+    <li><a href="sass.html">Add Recipe</a></li>
+  </ul>
     <div class="container">
     {% block content %}
 
