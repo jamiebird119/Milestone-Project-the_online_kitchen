@@ -1,9 +1,91 @@
 {% extends 'base.html' %} {% block content %}
+
+<h3>Add Recipe</h3>
 <div class="row">
-  <div class="input-field col s6">
-    <i class="material-icons prefix">mode_edit</i>
-    <input id="recipe_name" type="text" class="validate" />
-    <label class="active" for="recipe_name">Recipe Name</label>
-  </div>
+	<form class="col s12" action="" method="POST">
+		<div class="row">
+			<div class="input-field col s6">
+				<input
+          id="recipe_name"
+          type="text"
+          class="validate"
+        />
+				<label for="recipe_name">Recipe Name</label>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="input-field col s6">
+				<input
+          id="added_by"
+          type="text"
+          class="validate"
+        />
+				<label for="first_name">Added by</label>
+			</div>
+		</div>
+
+		<h5> Ingredients </h5>
+		<div class="row">
+			<div class="input-field col s5">
+				<input
+          id="ingredient_name"
+          type="text"
+          class="validate"
+        />
+				<label for="ingredient_name">Ingredient Name</label>
+			</div>
+			<div class="input-field col s5">
+				<input
+          id="ingredient_quantity"
+          type="text"
+          class="validate"
+        />
+				<label for="ingredient_quantity">Ingredient Quantity</label>
+			</div>
+			<div id="additional_ingredients()">
+			</div>
+			<div class="col s4">
+				<a class="btn-floating btn-large waves-effect waves-light red"
+					onclick="add_ingredients"><i class="material-icons">add</i></a>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="input-field col s12">
+				<textarea id="method" class="materialize-textarea" rows="9"></textarea>
+				<label for="method">Method</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col s12">
+				<select id="difficulty" name="difficulty">
+                    <option value="" disabled selected>Choose your option</option>
+                    <option value="1">Easy</option>
+                    <option value="2">Intermediate</option>
+                    <option value="3">Hard</option>
+                    <option value="4">Masterchef</option>
+                </select>
+				<label>Difficulty</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col s6">
+				<input
+          id="cooking_time"
+          type="text"
+          class="validate"
+        />
+				<label for="cooking_time">Cooking Time (in mins)</label>
+			</div>
+		</div>
+		<div class="row">
+			<button class="btn waves-effect waves-light" type="submit" name="action">
+        Add Recipe
+        <i class="material-icons right">playlist_add</i>
+      </button>
+		</div>
+	</form>
 </div>
+
 {% endblock %}
