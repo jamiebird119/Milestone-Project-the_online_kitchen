@@ -2,11 +2,12 @@
 
 <h3>Add Recipe</h3>
 <div class="row">
-	<form class="col s12" action="" method="POST">
+	<form class="col s12" action="{{ url_for('insert_recipe')}}" method="POST">
 		<div class="row">
 			<div class="input-field col s6">
 				<input
           id="recipe_name"
+          name="recipe_name"
           type="text"
           class="validate"
         />
@@ -18,6 +19,7 @@
 			<div class="input-field col s6">
 				<input
           id="added_by"
+          name="added_by"
           type="text"
           class="validate"
         />
@@ -29,7 +31,8 @@
 		<div class="row">
 			<div class="input-field col s5">
 				<input
-          id="ingredient_name"
+          id="ingredient_1"
+          name="ingredient_1"
           type="text"
           class="validate"
         />
@@ -37,14 +40,14 @@
 			</div>
 			<div class="input-field col s5">
 				<input
-          id="ingredient_quantity"
+          id="ingredient_quantity_1"
+          name="ingredient_quantity_1"
           type="text"
           class="validate"
         />
 				<label for="ingredient_quantity">Ingredient Quantity</label>
 			</div>
-			<div id="additional_ingredients"> 
-			</div>
+			<div id="additional_ingredients"></div>
 			<div class="col s4">
 				<a class="btn-floating btn-large waves-effect waves-light red"
 					onclick="add_ingredients()"><i class="material-icons">add</i></a>
@@ -53,7 +56,7 @@
 
 		<div class="row">
 			<div class="input-field col s12">
-				<textarea id="method" class="materialize-textarea" rows="9"></textarea>
+				<textarea id="method" class="materialize-textarea" rows="9" name="method"></textarea>
 				<label for="method">Method</label>
 			</div>
 		</div>
@@ -61,10 +64,10 @@
 			<div class="input-field col s12">
 				<select id="difficulty" name="difficulty">
                     <option value="" disabled selected>Choose your option</option>
-                    <option value="1">Easy</option>
-                    <option value="2">Intermediate</option>
-                    <option value="3">Hard</option>
-                    <option value="4">Masterchef</option>
+                    <option value="Easy">Easy</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Hard">Hard</option>
+                    <option value="Masterchef">Masterchef</option>
                 </select>
 				<label>Difficulty</label>
 			</div>
@@ -73,6 +76,7 @@
 			<div class="input-field col s6">
 				<input
           id="cooking_time"
+          name="cooking_time"
           type="text"
           class="validate"
         />

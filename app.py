@@ -23,6 +23,20 @@ def home():
 def addrecipe():
     return render_template("add_recipe.html")
 
+
+@app.route("/insert_recipe/", methods=["POST"])
+def insert_recipe():
+    name = request.form.get("recipe_name")
+    added_by = request.form.get("added_by")
+    ingredients = {request.form.get("ingredients_name"), request.form.get("ingredients_quantity")}
+    method = request.form.get("method")
+    difficulty = request.form.get("difficulty")
+    cooking_time = request.form.get("cooking_time")
+    recipe = request.form.to_dict()
+    print(recipe)
+    return render_template('recipe.html', recipes=recipe)
+
+
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
             port=int(os.environ.get('PORT')),
