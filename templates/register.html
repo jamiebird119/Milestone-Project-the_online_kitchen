@@ -1,6 +1,8 @@
 {% extends 'base.html' %} {% block content %}
 <h4> Register now to add your own recipes and favourite recipes you like. </h4>
-
+<div class="alert">
+<h5> <strong> {{ alert }} </strong> </h5>
+</div>
 <form class="col s12" action="{{ url_for('adduser')}}" method="POST">
   <div class="row">
     <div class="input-field col s6">

@@ -1,0 +1,23 @@
+{% extends 'loggedin.html' %}{% block content %}
+
+<h4> Welcome {{ user.first_name }} </h4>
+
+<h5> My Recipes </h5>
+{% if user.added_recipes %}
+    {% for recipe in user.added_recipes %}
+    <a> {{ recipe }} </a>
+    {% endfor %}
+{% else %}
+    <p> You have not currently added any recipes </p>
+{% endif %}
+
+<h5> Favourited Recipes </h5>
+
+{% if user.favourite_recipes %}
+    {% for recipe in user.favourite_recipes %}
+    <a> {{ recipe }} </a>
+    {% endfor %}
+{% else %}
+    <p> You have not currently favourited any recipes </p>
+{% endif %}
+{% endblock %}
