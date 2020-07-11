@@ -10,6 +10,7 @@
           name="recipe_name"
           type="text"
           class="validate"
+          required
         />
 				<label for="recipe_name">Recipe Name</label>
 			</div>
@@ -22,6 +23,7 @@
           name="added_by"
           type="text"
           class="validate"
+          required
         />
 				<label for="first_name">Added by</label>
 			</div>
@@ -31,19 +33,21 @@
 		<div class="row">
 			<div class="input-field col s5">
 				<input
-          id="ingredient_1"
-          name="ingredient_1"
+          id="ingredient[]"
+          name="ingredient[]"
           type="text"
           class="validate"
+          required
         />
-				<label for="ingredient_name">Ingredient Name</label>
+				<label for="ingredient">Ingredient Name</label>
 			</div>
 			<div class="input-field col s5">
 				<input
-          id="ingredient_quantity_1"
-          name="ingredient_quantity_1"
+          id="ingredient_quantity[]"
+          name="ingredient_quantity[]"
           type="text"
           class="validate"
+          required
         />
 				<label for="ingredient_quantity">Ingredient Quantity</label>
 			</div>

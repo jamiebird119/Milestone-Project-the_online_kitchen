@@ -19,6 +19,7 @@ mongo = PyMongo(app)
 def home():
     return render_template("index.html")
 
+
 @app.route("/addrecipe")
 def addrecipe():
     return render_template("add_recipe.html")
@@ -26,15 +27,37 @@ def addrecipe():
 
 @app.route("/insert_recipe/", methods=["POST"])
 def insert_recipe():
+    recipes = mongo.db.recipes
     name = request.form.get("recipe_name")
     added_by = request.form.get("added_by")
-    ingredients = {request.form.get("ingredients_name"), request.form.get("ingredients_quantity")}
+    ingredients = request.form.getlist("ingredient")
+    print(ingredients)
+    ingredients_quantity = request.form.getlist("ingredient_quantity")
+    print(ingredients_quantity)
     method = request.form.get("method")
     difficulty = request.form.get("difficulty")
     cooking_time = request.form.get("cooking_time")
-    recipe = request.form.to_dict()
-    print(recipe)
-    return render_template('recipe.html', recipes=recipe)
+    recipe = {"recipe_name": name, "added_by": added_by,
+              "method": method,
+              "ingredients": ingredients,
+              "ingredients_quantity": ingredients_quantity,
+              "difficulty": difficulty,
+              "cooking_time": cooking_time}
+    return render_template('recipe.html', recipe=recipe)
+
+
+@app.route('/register')
+def register():
+    return render_template("register.html")
+
+
+@app.route('/adduser', methods=["POST"])
+def adduser():
+    user = mongo.db.users
+    user.insert_one(request.form.to_dict())
+    return render_template("loggedin.html", user=request.form.to_dict())
+
+
 
 
 if __name__ == '__main__':

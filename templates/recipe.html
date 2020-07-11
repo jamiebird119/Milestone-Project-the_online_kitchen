@@ -1,4 +1,20 @@
 {% extends 'base.html' %} {% block content %}
 
-{{ recipes }}
+<h2> {{ recipe.recipe_name }} </h2>
+
+<h5> Added by - {{ recipe.added_by }} </h5>
+
+<p> Cooking time - {{ recipe.cooking_time }} mins </p>
+
+<p>  Difficulty - {{ recipe.difficulty }} </p>
+
+<td>
+{% for ingredient in recipe.ingredients %}
+<tr> {{ ingredient }} </tr>
+
+{% endfor %}
+</td>
+<p> {{ recipe.method }} </p>
+
+
 {% endblock %}

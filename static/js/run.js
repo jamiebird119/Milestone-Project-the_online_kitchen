@@ -4,24 +4,23 @@ $(document).ready(function(){
 
 function add_ingredients(){
     var el = $("#additional_ingredients");
-    if (el.is(':empty')){
     el.append(`<div class="row added">
 			<div class="input-field col s5">
 				<input
-          id="ingredient_2"
-          name="ingredient_2"
+          id="ingredient[]"
+          name="ingredient[]"
           type="text"
           class="validate"
         />
-				<label for="ingredient_name">Ingredient Name</label>
+				<label for="ingredient">Ingredient Name</label>
 			</div>
 
 			<div class="input-field col s5">
 				<input
-          id="ingredient_quantity_2"
+          id="ingredient_quantity[]"
           type="text"
           class="validate"
-          name="ingredient_quantity_2"
+          name="ingredient_quantity[]"
         />
 				<label for="ingredient_quantity">Ingredient Quantity</label>
 			</div>
@@ -33,41 +32,7 @@ function add_ingredients(){
                 </div>
                 </div>`);
     }
-    else{
-                    id = $("#additional_ingredients .validate:last").attr('id')
-                    split_id = id.split("_")
-                    count = parseInt(split_id[2])
-                    console.log(count)
-                    count += 1;
-                    el.append(`<div class="row added">
-			<div class="input-field col s5">
-				<input
-          id="ingredient_name_${count}"
-          name="ingredient_name_${count}"
-          type="text"
-          class="validate"
-        />
-				<label for="ingredient_name">Ingredient Name</label>
-			</div>
-
-			<div class="input-field col s5">
-				<input
-          id="ingredient_quantity_${count}"
-          type="text"
-          class="validate"
-          name="ingredient_quantity_${count}"
-        />
-				<label for="ingredient_quantity">Ingredient Quantity</label>
-			</div>
-            <div class="col s2"> 
-            <a class="btn-floating btn-large waves-effect waves-light red"
-				onclick="remove_ingredients()">
-                <i class="material-icons">remove</i>
-                </a>
-                </div>
-                </div>`);
-    };
-
+    
 }
 function remove_ingredients(){
     var el = $('.added').last()
