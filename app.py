@@ -42,15 +42,6 @@ def insert_recipe():
               "difficulty": difficulty,
               "cooking_time": cooking_time}
     recipes.insert_one(recipe)
-    user = mongo.db.user
-    user_details = user.find({"username": added_by})
-    if user_details.myrecipes:
-        user_recipes = user_details.myrecipes
-        user.update_one({"username": added_by}, {
-                        "$set": {"myrecipes": user_recipes.append(name)}})
-    else: 
-        user.update_one({"username": added_by}, {
-                        "$set": {"myrecipes": name}})
     return render_template('recipe.html', recipe=recipe)
 
 
@@ -78,8 +69,9 @@ def adduser():
     user = mongo.db.users
     username = request.form.get("username")
     if user.find_one({"username": username}) == '':
-        user.insert_one(request.form.to_dict())
-        return render_template("loggedin.html", user=request.form.to_dict())
+        details = user.insert_one(
+            request.form.to_dict()).append({"myrecipes": ""})
+        return render_template("loggedin.html", user=details)
     else:
         exists = "Username already exists. Log in or use another username."
         return render_template('register.html',
