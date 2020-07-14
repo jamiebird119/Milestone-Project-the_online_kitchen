@@ -3,9 +3,9 @@
 <h4> Welcome {{ user.first_name.capitalize() }} </h4>
 
 <h5> My Recipes </h5>
-{% if user.added_recipes %}
-    {% for recipe in user.added_recipes %}
-    <a> {{ recipe }} </a>
+{% if recipes %}
+    {% for recipe in recipes %}
+    <a> {{ recipe.recipe_name }} </a>
     {% endfor %}
 {% else %}
     <p> You have not currently added any recipes </p>

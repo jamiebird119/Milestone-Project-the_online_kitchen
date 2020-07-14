@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'loggedin.html' %} {% block content %}
 
 <h3>Add Recipe</h3>
 <div class="row">
@@ -21,6 +21,7 @@
         <input
           id="added_by"
           name="added_by"
+          value="{{ session.username }}"
           type="text"
           class="validate"
           required

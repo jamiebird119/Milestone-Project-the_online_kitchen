@@ -1,6 +1,6 @@
 import os
 from os import path
-from flask import Flask, render_template, redirect, request, url_for
+from flask import Flask, render_template, redirect, request, url_for, session
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -12,6 +12,7 @@ app = Flask(__name__)
 
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
+app.secret_key = os.environ.get("secret_key")
 
 mongo = PyMongo(app)
 
@@ -37,7 +38,7 @@ def insert_recipe():
     method = request.form.get("method")
     difficulty = request.form.get("difficulty")
     cooking_time = request.form.get("cooking_time")
-    recipe = {"recipe_name": name, "added_by": added_by,
+    recipe = {"recipe_name": name, "added_by": added_by.lower(),
               "method": method,
               "ingredients": list(ingredients),
               "difficulty": difficulty,
@@ -54,12 +55,14 @@ def register():
 @ app.route('/login', methods=["POST"])
 def login():
     user = mongo.db.users
-    user_login = {"username": request.form.get('username'),}
+    user_login = {"username": request.form.get('username')}
+    username = request.form.get('username').lower()
     user_details = user.find_one(user_login)
     password_check = check_password_hash(user_details["hashed_password"], request.form.get('password').lower())
     if password_check :
+        session["username"] = request.form.get("username")
         return render_template('userhome.html',
-                               user=user_details)
+                               user=user_details, recipes = mongo.db.recipes.find({"added_by" : username}), username = session["username"])
     else:
         return render_template('index.html',
                                alert="Username or password not recognised. Please try again.")
@@ -69,16 +72,33 @@ def login():
 def adduser():
     user = mongo.db.users
     username = request.form.get("username").lower()
-    print(type(user.find_one({"username": username})))
+    print(mongo.db.recipes.find({"added_by" : username}))
     if not user.find_one({"username": username}):
         password = request.form.get("password")
+        session["username"] = request.form.get("username")
         details = {"username": username, "hashed_password": generate_password_hash(password.lower()), "first_name" : request.form.get("first_name").lower(), "last_name": request.form.get("last_name").lower()}
         user.insert_one(details)
-        return render_template("userhome.html", user=details)
+        return render_template("userhome.html", user=details, recipes = mongo.db.recipes.find({"added_by" : username}))
     else:
         exists = "Username already exists. Log in or use another username."
         return render_template('register.html',
                                alert=exists)
+
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return render_template("index.html")
+
+
+@app.route('/userhome/<username>')
+def userhome(username):
+    return render_template("userhome.html", user=mongo.db.users.find_one({"username": username}), recipes = mongo.db.recipes.find({"added_by" : username}))
+
+
+@app.route('/adduserrecipe')
+def adduserrecipe():
+    return render_template("add_recipe_loggedin.html")
 
 
 if __name__ == '__main__':
