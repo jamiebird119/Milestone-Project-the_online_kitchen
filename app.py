@@ -3,6 +3,7 @@ from os import path
 from flask import Flask, render_template, redirect, request, url_for
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
+from werkzeug.security import generate_password_hash, check_password_hash
 if path.exists('env.py'):
     import env
 
@@ -53,10 +54,10 @@ def register():
 @ app.route('/login', methods=["POST"])
 def login():
     user = mongo.db.users
-    user_login = {"username": request.form.get('username'),
-                  "password": request.form.get('password')}
+    user_login = {"username": request.form.get('username'),}
     user_details = user.find_one(user_login)
-    if user_details:
+    password_check = check_password_hash(user_details["hashed_password"], request.form.get('password').lower())
+    if password_check :
         return render_template('userhome.html',
                                user=user_details)
     else:
@@ -67,11 +68,13 @@ def login():
 @ app.route('/adduser', methods=["POST"])
 def adduser():
     user = mongo.db.users
-    username = request.form.get("username")
-    if user.find_one({"username": username}) == '':
-        details = user.insert_one(
-            request.form.to_dict()).append({"myrecipes": ""})
-        return render_template("loggedin.html", user=details)
+    username = request.form.get("username").lower()
+    print(type(user.find_one({"username": username})))
+    if not user.find_one({"username": username}):
+        password = request.form.get("password")
+        details = {"username": username, "hashed_password": generate_password_hash(password.lower()), "first_name" : request.form.get("first_name").lower(), "last_name": request.form.get("last_name").lower()}
+        user.insert_one(details)
+        return render_template("userhome.html", user=details)
     else:
         exists = "Username already exists. Log in or use another username."
         return render_template('register.html',

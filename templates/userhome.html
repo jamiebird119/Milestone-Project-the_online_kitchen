@@ -1,6 +1,6 @@
 {% extends 'loggedin.html' %}{% block content %}
 
-<h4> Welcome {{ user.first_name }} </h4>
+<h4> Welcome {{ user.first_name.capitalize() }} </h4>
 
 <h5> My Recipes </h5>
 {% if user.added_recipes %}
