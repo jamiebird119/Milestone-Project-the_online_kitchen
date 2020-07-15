@@ -18,8 +18,11 @@
 
     <h5>Favourited Recipes</h5>
 
-    {% if user.favourite_recipes %} {% for recipe in user.favourite_recipes %}
-    <a> {{ recipe }} </a>
+    {% if user.favourites %} {% for recipe in user.favourites %}
+    {% for item in recipe %}
+<a> {{ item }} </a>
+    {% endfor %}
+    
     {% endfor %} {% else %}
     <p>You have not currently favourited any recipes</p>
     {% endif %} {% endblock %}

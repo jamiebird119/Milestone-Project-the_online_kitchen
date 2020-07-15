@@ -97,8 +97,7 @@ def add_favourite(recipe_name):
     user = mongo.db.users.find_one({"username": username})
     if "favourites" not in user:
         mongo.db.users.update({"username": username}, {
-            "$set": {"favourites": [recipe_name]}})
-        print("updated")
+            "$set": {"favourites": recipe_name}})
         return render_template('userhome.html',
                                user=user,
                                recipes=mongo.db.recipes.find(
@@ -106,15 +105,27 @@ def add_favourite(recipe_name):
                                username=session["username"])
     else:
         favourites = user["favourites"]
-        print(user["favourites"])
-        favourites[0].append(recipe_name)
-        print(favourites)
+        favourites.append(recipe_name.lower())
         mongo.db.users.update_one({"username": username}, {
-            "$set": {"favourites": [favourites]}})
+            "$set": {"favourites": favourites}})
     return render_template('userhome.html',
                            user=user,
                            recipes=mongo.db.recipes.find(
                                {"added_by": username}),
+                           username=session["username"])
+
+
+@app.route('/remove_favourite/<recipe_name>', methods=["POST"])
+def remove_favourite(recipe_name):
+    user = mongo.db.users.find_one({"username": session["username"]})
+    favourites = user["favourites"]
+    favourites.remove(recipe_name.lower())
+    mongo.db.users.update_one({"username": session["username"]}, {
+                              "$set": {"favourites": favourites}})
+    return render_template('userhome.html',
+                           user=user,
+                           recipes=mongo.db.recipes.find(
+                               {"added_by": session["username"]}),
                            username=session["username"])
 
 
