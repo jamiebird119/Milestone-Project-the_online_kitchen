@@ -39,3 +39,4 @@ function remove_ingredients() {
   el_2.remove();
   button.remove();
 }
+
