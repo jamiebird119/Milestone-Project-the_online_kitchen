@@ -1,0 +1,149 @@
+{% extends 'loggedin.html' %} {% block content %}
+
+<h3>Add Recipe</h3>
+<div class="row">
+  <form class="col s12" action="{{ url_for('insertuser_recipe')}}" method="POST">
+    <div class="row">
+      <div class="input-field col s6">
+        <input
+          id="recipe_name"
+          name="recipe_name"
+          type="text"
+          class="validate"
+          value="{{recipe.recipe_name}}"
+          required
+        />
+        <label for="recipe_name">Recipe Name</label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s6">
+        <input
+          id="added_by"
+          name="added_by"
+          value="{{ session.username }}"
+          type="text"
+          class="validate"
+          value="{{recipe.added_by}}"
+          disabled
+          required
+        />
+        <label for="first_name">Added by (username)</label>
+      </div>
+    </div>
+
+    <h5>Ingredients</h5>
+
+    <div class="row">
+      <div class="input-field col s5 ingredients">
+      {% for item in recipe.ingredients %}
+        <input
+          id="ingredient"
+          name="ingredient"
+          type="text"
+          class="validate"
+          value="{{ item[0] }}"
+          required
+        />
+        {% endfor %}
+        <label for="ingredient">Ingredient Name</label>
+
+      </div>
+      <div class="input-field col s5 quantity">
+      {% for item in recipe.ingredients %}
+        <input
+          id="ingredient_quantity"
+          name="ingredient_quantity"
+          type="text"
+          value={{item[1]}}
+          class="validate"
+          required
+        />
+        {% endfor %}
+        <label for="ingredient_quantity">Ingredient Quantity</label>
+      </div>
+      <div id="additional" class="col s2">
+        <br/>
+        <br/>
+        <br/>
+    {% for item in recipe.ingredients %}
+    {% if loop.index != 1 %}
+    <div class="col s12 added"><a class="btn-floating btn-large waves-effect waves-light red"
+				onclick="remove_ingredients()">
+                <i class="material-icons">remove</i>
+                </a></div>
+    {% endif %}
+    {% endfor %}
+      </div>
+      <div class="col s4">
+        <a
+          class="btn-floating btn-large waves-effect waves-light red"
+          onclick="add_ingredients()"
+          ><i class="material-icons">add</i></a
+        >
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <textarea
+          id="method"
+          class="materialize-textarea"
+          name="method"
+          value="{{recipe.method}}"
+        ></textarea>
+        <label for="method">Method</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <select id="difficulty" name="difficulty">
+          <option value="" disabled selected>Choose your option</option>
+          {% if recipe.difficulty == "Easy" %}
+          <option selected value="Easy">Easy</option>
+          {% else %}
+          <option value="Easy">Easy</option>
+          {% endif %}
+          {% if recipe.difficulty == "Intermediate" %}
+          <option selected value="Intermediate">Intermediate</option>
+          {% else %}
+          <option value="Intermediate">Intermediate</option>
+          {% endif %}
+          {% if recipe.difficulty == "Hard" %}
+          <option selected value="Hard">Hard</option>
+          {% else %}
+          <option value="Hard">Hard</option>
+          {% endif %}
+          {% if recipe.difficulty == "Masterchef" %}
+          <option selected value="Masterchef">Masterchef</option>
+          {% else %}
+          <option value="Masterchef">Masterchef</option>
+          {% endif %}
+          
+        </select>
+        <label>Difficulty</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s6">
+        <input
+          id="cooking_time"
+          name="cooking_time"
+          type="text"
+          class="validate"
+          value="{{recipe.cooking_time}}"
+        />
+        <label for="cooking_time">Cooking Time (in mins)</label>
+      </div>
+    </div>
+    <div class="row">
+      <button class="btn waves-effect waves-light" type="submit" name="action">
+        Update Recipe
+        <i class="material-icons right">playlist_add</i>
+      </button>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

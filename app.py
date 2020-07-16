@@ -47,6 +47,33 @@ def insert_recipe():
     return render_template('recipe.html', recipe=recipe, user=mongo.db.users.find_one({"username": session["username"]}))
 
 
+@app.route("/get_recipe/<recipe_name>")
+def get_recipe(recipe_name):
+    recipe = mongo.db.recipes.find_one(
+        {"recipe_name": recipe_name})
+    return render_template('recipe_loggedin.html',
+                           recipe=recipe,
+                           user=mongo.db.users.find_one({
+                               "username": session["username"]}))
+
+
+@app.route("/edit_recipe/<recipe_name>")
+def edit_recipe(recipe_name):
+    return render_template("edit_recipe_loggedin.html",
+                           recipe=mongo.db.recipes.find_one({
+                               "recipe_name": recipe_name}))
+
+
+@app.route("/remove_recipe/<recipe_name>", methods=["POST"])
+def remove_recipe(recipe_name):
+    return render_template('userhome.html',
+                           user=mongo.db.users.find_one(
+                               {"username": session["username"]}),
+                           recipes=mongo.db.recipes.find(
+                               {"added_by": session["username"]}),
+                           username=session["username"])
+
+
 @app.route("/insertuser_recipe/", methods=["POST"])
 def insertuser_recipe():
     recipes = mongo.db.recipes

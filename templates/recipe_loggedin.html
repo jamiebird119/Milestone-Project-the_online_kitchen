@@ -20,7 +20,7 @@
      {% if recipe.recipe_name.lower() in user.favourites %}
     <button class="btn waves-effect waves-light" type="submit" name="action" onclick="remove_favourite('{{recipe.recipe_name}}')">
       Remove from Favourites
-      <i class="material-icons right">playlist_remove</i>
+      <i class="material-icons right">remove</i>
     </button>
     
     {% else %}
