@@ -35,7 +35,7 @@ def insert_recipe():
     added_by = request.form.get("added_by")
     ingredients = zip(request.form.getlist("ingredient"),
                       request.form.getlist("ingredient_quantity"))
-    method = request.form.get("method")
+    method = request.form.get("method").splitlines()
     difficulty = request.form.get("difficulty")
     cooking_time = request.form.get("cooking_time")
     recipe = {"recipe_name": name, "added_by": added_by.lower(),
@@ -81,7 +81,7 @@ def insertuser_recipe():
     added_by = request.form.get("added_by")
     ingredients = zip(request.form.getlist("ingredient"),
                       request.form.getlist("ingredient_quantity"))
-    method = request.form.get("method")
+    method = request.form.get("method").splitlines()
     difficulty = request.form.get("difficulty")
     cooking_time = request.form.get("cooking_time")
     recipe = {"recipe_name": name, "added_by": added_by.lower(),
@@ -90,6 +90,7 @@ def insertuser_recipe():
               "difficulty": difficulty,
               "cooking_time": cooking_time}
     # recipes.insert_one(recipe)
+    print(method)
     return render_template('recipe_loggedin.html', recipe=recipe, user=mongo.db.users.find_one({"username": session["username"]}))
 
 
@@ -146,7 +147,7 @@ def add_favourite(recipe_name):
 def remove_favourite(recipe_name):
     user = mongo.db.users.find_one({"username": session["username"]})
     favourites = user["favourites"]
-    favourites.remove(recipe_name.lower())
+    favourites.remove(recipe_name)
     mongo.db.users.update_one({"username": session["username"]}, {
                               "$set": {"favourites": favourites}})
     return render_template('userhome.html',
@@ -197,6 +198,29 @@ def userhome(username):
 @app.route('/adduserrecipe')
 def adduserrecipe():
     return render_template("add_recipe_loggedin.html")
+
+
+@app.route("/updaterecipe/<id>", methods=["POST"])
+def updaterecipe(id):
+    recipes = mongo.db.recipes
+    name = request.form.get("recipe_name")
+    added_by = session["username"]
+    ingredients = zip(request.form.getlist("ingredient"),
+                      request.form.getlist("ingredient_quantity"))
+    method = request.form.get("method").splitlines()
+    difficulty = request.form.get("difficulty")
+    cooking_time = request.form.get("cooking_time")
+    recipes.update_one({"_id": ObjectId(id)},
+                       {"$set": {"recipe_name": name,
+                                 "added_by": added_by.lower(),
+                                 "method": method,
+                                 "ingredients": list(ingredients),
+                                 "difficulty": difficulty,
+                                 "cooking_time": cooking_time}})
+    return render_template('recipe_loggedin.html',
+                           recipe=mongo.db.recipes.find_one({"_id": ObjectId(id)}),
+                           user=mongo.db.users.find_one({
+                               "username": session["username"]}))
 
 
 if __name__ == '__main__':

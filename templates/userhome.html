@@ -2,6 +2,22 @@
 
 <h4>Welcome {{ user.first_name.capitalize() }}</h4>
 
+<div class="row">
+<div class="col s3">
+<select id="search_var" name="difficulty">
+          <option value="" disabled selected>Choose your option</option>
+          <option value="recipe_name">Name</option>
+          <option value="difficulty">Difficulty (Easy, Intermediate, Hard, Masterchef) </option>
+          <option value="cooking_time">Cooking Time (mins)</option>
+          <option value="added_by">Added By</option>
+        </select>
+</div>
+<div class="search-wrapper col s5">
+            <input id="search" placeholder="Search"><i class="material-icons">search</i>
+            <div class="search-results"></div>
+          </div>
+</div>
+
 <h5>My Recipes</h5>
 {% if recipes %}
     <ul>

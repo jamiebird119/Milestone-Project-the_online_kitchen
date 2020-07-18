@@ -5,12 +5,7 @@
   <form class="col s12" action="{{ url_for('insertuser_recipe')}}" method="POST">
     <div class="row">
       <div class="input-field col s6">
-        <input
-          id="recipe_name"
-          name="recipe_name"
-          type="text"
-          class="validate"
-          required
+        <input id="recipe_name" name="recipe_name" type="text" class="validate" required
         />
         <label for="recipe_name">Recipe Name</label>
       </div>
@@ -18,13 +13,7 @@
 
     <div class="row">
       <div class="input-field col s6">
-        <input
-          id="added_by"
-          name="added_by"
-          value="{{ session.username }}"
-          type="text"
-          class="validate"
-          required
+        <input id="added_by" name="added_by" value="{{ session.username }}" type="text" class="validate" required
         />
         <label for="first_name">Added by (username)</label>
       </div>
@@ -33,22 +22,12 @@
     <h5>Ingredients</h5>
     <div class="row">
       <div class="input-field col s5 ingredients">
-        <input
-          id="ingredient"
-          name="ingredient"
-          type="text"
-          class="validate"
-          required
+        <input id="ingredient" name="ingredient" type="text" class="validate" required
         />
         <label for="ingredient">Ingredient Name</label>
       </div>
       <div class="input-field col s5 quantity">
-        <input
-          id="ingredient_quantity"
-          name="ingredient_quantity"
-          type="text"
-          class="validate"
-          required
+        <input id="ingredient_quantity" name="ingredient_quantity" type="text" class="validate" required
         />
         <label for="ingredient_quantity">Ingredient Quantity</label>
       </div>

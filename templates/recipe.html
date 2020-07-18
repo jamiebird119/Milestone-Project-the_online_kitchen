@@ -46,7 +46,14 @@
 
   {% endfor %}
 </table>
-<p>{{ recipe.method }}</p>
+
+{% for line in recipe.method %}
+{% if item == '' %}
+<br>
+{% else %}
+<p> {{item}} </p>
+{% endif %}
+{% endfor %}
 
 <script>
 function add_favourite(recipe_name){

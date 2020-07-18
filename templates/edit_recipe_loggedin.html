@@ -4,7 +4,7 @@
 <div class="row">
   <form
     class="col s12"
-    action="{{ url_for('insertuser_recipe')}}"
+    action="{{ url_for('updaterecipe', id=recipe._id)}}"
     method="POST"
   >
     <div class="row">
@@ -26,7 +26,6 @@
         <input
           id="added_by"
           name="added_by"
-          value="{{ session.username }}"
           type="text"
           class="validate"
           value="{{recipe.added_by}}"
@@ -42,25 +41,11 @@
     <div class="row">
       {% for item in recipe.ingredients %} {% if loop.index == 1 %}
       <div class="input-field col s5 ingredients">
-        <input
-          id="ingredient"
-          name="ingredient"
-          type="text"
-          class="validate"
-          value="{{ item[0] }}"
-          required
-        />
+        <input id="ingredient" name="ingredient" type="text" class="validate" value="{{ item[0] }}" required>
         <label for="ingredient">Ingredient Name</label>
       </div>
       <div class="input-field col s5 quantity">
-        <input
-          id="ingredient_quantity"
-          name="ingredient_quantity"
-          type="text"
-          value="{{item[1]}}"
-          class="validate"
-          required
-        />
+        <input id="ingredient_quantity" name="ingredient_quantity" type="text" value="{{ item[1] }}" class="validate" required>
         <label for="ingredient_quantity">Ingredient Quantity</label>
         {% endif %} {% endfor %}
       </div>
@@ -69,26 +54,13 @@
         {% if loop.index != 1 %}
         <div class="row added">
           <div class="input-field col s5">
-            <input
-              name="ingredient"
-              type="text"
-              class="validate added_ingredient"
-              value="{{item[0]}}"
-            />
+            <input name="ingredient" type="text" class="validate added_ingredient" value="{{ item[0] }}">
           </div>
           <div class="input-field col s5">
-            <input
-              type="text"
-              class="validate added_quantity"
-              name="ingredient_quantity"
-              value="{{item[1]}}"
-            />
+            <input type="text" class="validate added_quantity" name="ingredient_quantity" value="{{ item[1] }}">
           </div>
           <div class="col s2">
-          <a
-            class="btn-floating btn-large waves-effect waves-light red"
-            onclick="remove_ingredients($(this))"
-          >
+          <a class="btn-floating btn-large waves-effect waves-light red" onclick="remove_ingredients($(this))">
             <i class="material-icons">remove</i>
           </a>
           </div>
@@ -97,22 +69,15 @@
       </div>
 
       <div class="col s4">
-        <a
-          class="btn-floating btn-large waves-effect waves-light red"
-          onclick="add_ingredients()"
-          ><i class="material-icons">add</i></a
-        >
+        <a class="btn-floating btn-large waves-effect waves-light red" onclick="add_ingredients()">
+            <i class="material-icons">add</i>
+        </a>
       </div>
     </div>
 
     <div class="row">
       <div class="input-field col s12">
-        <textarea
-          id="method"
-          class="materialize-textarea"
-          name="method"
-          value="{{recipe.method}}"
-        ></textarea>
+        <textarea id="method" class="materialize-textarea" name="method" rows="9">{% for item in recipe.method %} {{- item -}} {% endfor %}</textarea>
         <label for="method">Method</label>
       </div>
     </div>
@@ -121,21 +86,24 @@
         <select id="difficulty" name="difficulty">
           <option value="" disabled selected>Choose your option</option>
           {% if recipe.difficulty == "Easy" %}
-          <option selected value="Easy">Easy</option>
+            <option selected value="Easy">Easy</option>
           {% else %}
-          <option value="Easy">Easy</option>
-          {% endif %} {% if recipe.difficulty == "Intermediate" %}
-          <option selected value="Intermediate">Intermediate</option>
+            <option value="Easy">Easy</option>
+          {% endif %}
+          {% if recipe.difficulty == "Intermediate" %}
+            <option selected value="Intermediate">Intermediate</option>
           {% else %}
-          <option value="Intermediate">Intermediate</option>
-          {% endif %} {% if recipe.difficulty == "Hard" %}
-          <option selected value="Hard">Hard</option>
+            <option value="Intermediate">Intermediate</option>
+          {% endif %}
+          {% if recipe.difficulty == "Hard" %}
+            <option selected value="Hard">Hard</option>
           {% else %}
-          <option value="Hard">Hard</option>
-          {% endif %} {% if recipe.difficulty == "Masterchef" %}
-          <option selected value="Masterchef">Masterchef</option>
+            <option value="Hard">Hard</option>
+          {% endif %}
+          {% if recipe.difficulty == "Masterchef" %}
+             <option selected value="Masterchef">Masterchef</option>
           {% else %}
-          <option value="Masterchef">Masterchef</option>
+            <option value="Masterchef">Masterchef</option>
           {% endif %}
         </select>
         <label>Difficulty</label>
@@ -143,13 +111,7 @@
     </div>
     <div class="row">
       <div class="input-field col s6">
-        <input
-          id="cooking_time"
-          name="cooking_time"
-          type="text"
-          class="validate"
-          value="{{recipe.cooking_time}}"
-        />
+        <input id="cooking_time" name="cooking_time" type="text" class="validate" value="{{recipe.cooking_time}}">
         <label for="cooking_time">Cooking Time (in mins)</label>
       </div>
     </div>
