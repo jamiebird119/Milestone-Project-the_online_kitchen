@@ -223,6 +223,32 @@ def updaterecipe(id):
                                "username": session["username"]}))
 
 
+@app.route("/search_loggedin", methods=["POST"])
+def search_loggedin():
+    variable = request.form.get("variable")
+    search_content = request.form.get("search").lower()
+    if variable == "recipe_name":
+        search_return = mongo.db.recipes.find({ "$text":{ "$search": search_content}})
+    else:
+        search_return = mongo.db.recipes.find({ variable: search_content})
+    return render_template("userhome.html",
+                            recipes=mongo.db.recipes.find({"added_by": session["username"]}),
+                            search_content=search_return, user=mongo.db.users.find_one({"username": session["username"]}))
+
+
+@app.route("/search", methods=["POST"])
+def search(): 
+    variable = request.form.get("variable")
+    search_content = request.form.get("search").lower()
+    if variable == "recipe_name":
+        search_return = mongo.db.recipes.find({ "$text":{ "$search": search_content}})
+    else:
+        search_return = mongo.db.recipes.find({ variable: search_content})
+    return render_template("index.html",
+                            search_content=search_return)
+
+
+
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
             port=int(os.environ.get('PORT')),

@@ -3,61 +3,84 @@
 <h4>Welcome {{ user.first_name.capitalize() }}</h4>
 
 <div class="row">
-<div class="col s3">
-<select id="search_var" name="difficulty">
-          <option value="" disabled selected>Choose your option</option>
+	<form action='{{url_for("search")}}' method="POST">
+		<div class="col s3">
+			<select id="search_var" name="variable">
+          <option value="" disabled selected>Choose your search option</option>
           <option value="recipe_name">Name</option>
           <option value="difficulty">Difficulty (Easy, Intermediate, Hard, Masterchef) </option>
           <option value="cooking_time">Cooking Time (mins)</option>
           <option value="added_by">Added By</option>
         </select>
+		</div>
+		<div class="col s5">
+			<input id="search" name="search" placeholder="Search">
 </div>
-<div class="search-wrapper col s5">
-            <input id="search" placeholder="Search"><i class="material-icons">search</i>
-            <div class="search-results"></div>
-          </div>
+
+			<div class="col s4">
+				<button class="btn-floating btn-large red" type="submit">
+            <i class="large material-icons">search</i>
+        </button>
+			</div>
+	</form>
+	<div class="row search-results"></div>
+	<ul>
+		{% for recipe in search_content %}
+
+		<li><a> {{ recipe.recipe_name }} </a>
+			<p> Cooking Time - {{ recipe.cooking_time }} mins <br/>
+                Difficulty - {{ recipe.difficulty.capitalize() }} 
+            </p>
+		</li>
+		{% endfor %}
+	</ul>
 </div>
+
+
 
 <h5>My Recipes</h5>
 {% if recipes %}
-    <ul>
-    {% for recipe in recipes %}
+<ul>
+	{% for recipe in recipes %}
 
-    <li>
-    <div class="row">
-        <div class="col s6">
-            <a href="{{url_for('get_recipe', recipe_name='fake_name').replace('fake_name', recipe.recipe_name)}}" > {{ recipe.recipe_name }} </a>
-            <p> Cooking time - {{ recipe.cooking_time }} <br/> Difficulty - {{ recipe.difficulty }}</p>
-        </div>
-        <div class="col s3">
-            <a class="btn waves-effect waves-light"  href="{{url_for('edit_recipe', recipe_name=recipe.recipe_name)}}" methods="POST">
-            Edit
-            <i class="material-icons right">playlist</i>
-            </a>
-        </div>
-        <div class="col s3">
-            <a class="btn waves-effect waves-light"   href="">
-            Delete
-            <i class="material-icons right">remove</i>
-        </a>
-    </div>
-    </div>
-    </li>
-    {% endfor %}
-    </ul>
-     {% else %}
-    <p>You have not currently added any recipes</p>
-    {% endif %}
+	<li>
+		<div class="row">
+			<div class="col s6">
+				<a href="{{url_for('get_recipe', recipe_name='fake_name').replace('fake_name', recipe.recipe_name)}}">
+					{{ recipe.recipe_name }} </a>
+				<p> Cooking time - {{ recipe.cooking_time }} mins
+					<br/> Difficulty - {{ recipe.difficulty.capitalize() }}</p>
+			</div>
+			<div class="col s3">
+				<a class="btn waves-effect waves-light"
+					href="{{url_for('edit_recipe', recipe_name=recipe.recipe_name)}}" methods="POST">
+					Edit
+					<i class="material-icons right">playlist</i>
+				</a>
+			</div>
+			<div class="col s3">
+				<a class="btn waves-effect waves-light" href="">
+					Delete
+					<i class="material-icons right">remove</i>
+				</a>
+			</div>
+		</div>
+	</li>
+	{% endfor %}
+</ul>
+{% else %}
+<p>You have not currently added any recipes</p>
+{% endif %}
 
-    <h5>Favourited Recipes</h5>
+<h5>Favourited Recipes</h5>
 
-    {% if user.favourites %} 
-    {% for recipe in user.favourites %}
-    <a> {{ recipe.capitalize() }} </a>
- 
-    {% endfor %} 
-    {% else %}
-    <p>You have not currently favourited any recipes</p>
-    {% endif %} {% endblock %}
-  </li>
+{% if user.favourites %}
+{% for recipe in user.favourites %}
+<a> {{ recipe.capitalize() }} </a>
+
+{% endfor %}
+{% else %}
+<p>You have not currently favourited any recipes</p>
+{% endif %} {% endblock %}
+</li>
 </ul>
