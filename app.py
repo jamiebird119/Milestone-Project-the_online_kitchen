@@ -134,7 +134,7 @@ def add_favourite(recipe_name):
     user = mongo.db.users.find_one({"username": username})
     if "favourites" not in user:
         mongo.db.users.update({"username": username}, {
-            "$set": {"favourites": recipe_name}})
+            "$set": {"favourites": [recipe_name]}})
         return render_template('userhome.html',
                                user=user,
                                recipes=mongo.db.recipes.find(
@@ -142,7 +142,7 @@ def add_favourite(recipe_name):
                                username=session["username"])
     else:
         favourites = user["favourites"]
-        favourites.append(recipe_name.lower())
+        favourites.append(recipe_name)
         mongo.db.users.update_one({"username": username}, {
             "$set": {"favourites": favourites}})
     return render_template('userhome.html',
