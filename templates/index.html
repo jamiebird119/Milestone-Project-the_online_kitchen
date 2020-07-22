@@ -1,40 +1,65 @@
 {% extends 'base.html' %} {% block content %}
-<p> <strong> {{ alert }} </strong> </p>
+<p><strong> {{ alert }} </strong></p>
+<div class="row">
+  <p>
+    This is the Online Cookbook. The place to share your personalised recipes
+    and discover new culinary delights.
+  </p>
+</div>
 
 <div class="row">
-<h4> Search for a recipe </h4>
-<form action='{{url_for("search")}}' method="POST">
-<div class="col s3">
-<select id="search_var" name="variable">
-          <option value="" disabled selected>Choose your search option</option>
-          <option value="recipe_name">Name</option>
-          <option value="difficulty">Difficulty (Easy, Intermediate, Hard, Masterchef) </option>
-          <option value="cooking_time">Cooking Time (mins)</option>
-          <option value="added_by">Added By</option>
-        </select>
-</div>
-<div class="col s5">
-            <input id="search" name="search" placeholder="Search">
-</div>
+  <h4>Search for a recipe</h4>
+  <form action="{{url_for('search')}}" method="POST">
+    <div class="col s3">
+      <select id="search_var" name="variable">
+        <option value="" disabled selected>Choose your search option</option>
+        <option value="recipe_name">Name</option>
+        <option value="difficulty"
+          >Difficulty (Easy, Intermediate, Hard, Masterchef)</option
+        >
+        <option value="cooking_time">Cooking Time (mins)</option>
+        <option value="added_by">Added By</option>
+      </select>
+    </div>
+    <div class="col s5">
+      <input id="search" name="search" placeholder="Search" />
+    </div>
 
-<div class="col s4">
-    <button class="btn-floating btn-large red" type="submit">
-            <i class="large material-icons">search</i>
-        </button>
-</div>
-</form>
+    <div class="col s4">
+      <button class="btn-floating btn-large red" type="submit">
+        <i class="large material-icons">search</i>
+      </button>
+    </div>
+  </form>
   <div class="row search-results"></div>
   <ul>
-  {% for recipe in search_content %}
+    {% for recipe in search_content %}
 
-  <li><a> {{ recipe.recipe_name }} </a>
-  <p> Cooking Time - {{ recipe.cooking_time }} mins <br/>
-      Difficulty - {{ recipe.difficulty.capitalize() }}
-  </li>
-  {% endfor %}
+    <li>
+      <a> {{ recipe.recipe_name }} </a>
+      <p>
+        Cooking Time - {{ recipe.cooking_time }} mins <br />
+        Difficulty - {{ recipe.difficulty.capitalize() }}
+      </p>
+    </li>
+    {% endfor %}
   </ul>
-          </div>  
-<p> This is the Online Cookbook. The place to share your personalised recipes and discover new culinary delights. </p>
-
+</div>
+<div class="row">
+  <div class="col s6">
+    <h4>Featured Recipes</h4>
+    <ul>
+      {% for featured in featured_list %}
+      <li>
+        <a href="{{url_for('get_recipe', recipe_name=featured.recipe_name)}}"><h5>{{ featured.recipe_name }}</h5></a>
+        <p>Cooking time - {{ featured.cooking_time}} mins <br/>
+        Added By - {{ featured.added_by }} <br/>
+        Difficulty - {{ featured.difficulty }}
+        </p>
+        {% endfor %}
+      </li>
+    </ul>
+  </div>
+</div>
 
 {% endblock %}

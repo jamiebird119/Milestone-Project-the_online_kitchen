@@ -20,7 +20,7 @@ mongo = PyMongo(app)
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template("index.html")
+    return render_template("index.html", featured_list=mongo.db.recipes.find().limit(10))
 
 
 @app.route("/addrecipe")
@@ -49,6 +49,15 @@ def insert_recipe():
 
 @app.route("/get_recipe/<recipe_name>")
 def get_recipe(recipe_name):
+    recipe = mongo.db.recipes.find_one(
+        {"recipe_name": recipe_name})
+    return render_template('recipe.html',
+                           recipe=recipe,
+                           )
+
+
+@app.route("/get_loggedinrecipe/<recipe_name>")
+def get_loggedinrecipe(recipe_name):
     recipe = mongo.db.recipes.find_one(
         {"recipe_name": recipe_name})
     return render_template('recipe_loggedin.html',
@@ -183,7 +192,8 @@ def adduser():
 @app.route('/logout')
 def logout():
     session.clear()
-    return render_template("index.html")
+    return render_template("index.html",
+                           featured_list=mongo.db.recipes.find().limit(10))
 
 
 @app.route('/userhome/<username>')
@@ -218,7 +228,8 @@ def updaterecipe(id):
                                  "difficulty": difficulty,
                                  "cooking_time": cooking_time}})
     return render_template('recipe_loggedin.html',
-                           recipe=mongo.db.recipes.find_one({"_id": ObjectId(id)}),
+                           recipe=mongo.db.recipes.find_one(
+                               {"_id": ObjectId(id)}),
                            user=mongo.db.users.find_one({
                                "username": session["username"]}))
 
@@ -228,25 +239,30 @@ def search_loggedin():
     variable = request.form.get("variable")
     search_content = request.form.get("search").lower()
     if variable == "recipe_name":
-        search_return = mongo.db.recipes.find({ "$text":{ "$search": search_content}})
+        search_return = mongo.db.recipes.find(
+            {"$text": {"$search": search_content}})
     else:
-        search_return = mongo.db.recipes.find({ variable: search_content})
+        search_return = mongo.db.recipes.find({variable: search_content})
     return render_template("userhome.html",
-                            recipes=mongo.db.recipes.find({"added_by": session["username"]}),
-                            search_content=search_return, user=mongo.db.users.find_one({"username": session["username"]}))
+                           recipes=mongo.db.recipes.find(
+                               {"added_by": session["username"]}),
+                           search_content=search_return,
+                           user=mongo.db.users.find_one({
+                               "username": session["username"]}))
 
 
 @app.route("/search", methods=["POST"])
-def search(): 
+def search():
     variable = request.form.get("variable")
     search_content = request.form.get("search").lower()
     if variable == "recipe_name":
-        search_return = mongo.db.recipes.find({ "$text":{ "$search": search_content}})
+        search_return = mongo.db.recipes.find(
+            {"$text": {"$search": search_content}})
     else:
-        search_return = mongo.db.recipes.find({ variable: search_content})
+        search_return = mongo.db.recipes.find({variable: search_content})
     return render_template("index.html",
-                            search_content=search_return)
-
+                           search_content=search_return,
+                           featured_list=mongo.db.recipes.find())
 
 
 if __name__ == '__main__':
