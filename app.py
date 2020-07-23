@@ -1,6 +1,6 @@
 import os
 from os import path
-from flask import Flask, render_template, redirect, request, url_for, session
+from flask import Flask, render_template, request, url_for, session
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -20,7 +20,8 @@ mongo = PyMongo(app)
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template("index.html", featured_list=mongo.db.recipes.find().limit(10))
+    return render_template("index.html",
+                           featured_list=mongo.db.recipes.find().limit(10))
 
 
 @app.route("/addrecipe")
@@ -43,8 +44,11 @@ def insert_recipe():
               "ingredients": list(ingredients),
               "difficulty": difficulty,
               "cooking_time": cooking_time}
-    # recipes.insert_one(recipe)
-    return render_template('recipe.html', recipe=recipe, user=mongo.db.users.find_one({"username": session["username"]}))
+    recipes.insert_one(recipe)
+    return render_template('recipe.html',
+                           recipe=recipe,
+                           user=mongo.db.users.find_one({
+                               "username": session["username"]}))
 
 
 @app.route("/get_recipe/<recipe_name>")
@@ -98,9 +102,12 @@ def insertuser_recipe():
               "ingredients": list(ingredients),
               "difficulty": difficulty,
               "cooking_time": cooking_time}
-    # recipes.insert_one(recipe)
+    recipes.insert_one(recipe)
     print(method)
-    return render_template('recipe_loggedin.html', recipe=recipe, user=mongo.db.users.find_one({"username": session["username"]}))
+    return render_template('recipe_loggedin.html',
+                           recipe=recipe,
+                           user=mongo.db.users.find_one({
+                               "username": session["username"]}))
 
 
 @app.route('/register')
@@ -124,8 +131,9 @@ def login():
                                    {"added_by": username}),
                                username=session["username"])
     else:
+        alert = "Username or password not recognised. Please try again."
         return render_template('index.html',
-                               alert="Username or password not recognised. Please try again.")
+                               alert=alert)
 
 
 @app.route('/add_favourite/<recipe_name>', methods=["POST"])
@@ -152,7 +160,7 @@ def add_favourite(recipe_name):
                            username=session["username"])
 
 
-@app.route('/remove_favourite/<recipe_name>', methods=["POST"])
+@app.route('/remove_favourite/<recipe_name>')
 def remove_favourite(recipe_name):
     user = mongo.db.users.find_one({"username": session["username"]})
     favourites = user["favourites"]

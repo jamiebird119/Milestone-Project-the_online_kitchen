@@ -3,70 +3,85 @@
 <h4>Welcome {{ user.first_name.capitalize() }}</h4>
 
 <div class="row">
-	<form action='{{url_for("search")}}' method="POST">
-		<div class="col s3">
-			<select id="search_var" name="variable">
-          <option value="" disabled selected>Choose your search option</option>
-          <option value="recipe_name">Name</option>
-          <option value="difficulty">Difficulty (Easy, Intermediate, Hard, Masterchef) </option>
-          <option value="cooking_time">Cooking Time (mins)</option>
-          <option value="added_by">Added By</option>
-        </select>
-		</div>
-		<div class="col s5">
-			<input id="search" name="search" placeholder="Search">
-</div>
+  <form action="{{url_for('search_loggedin')}}" method="POST">
+    <div class="col s4">
+      <select id="search_var" name="variable">
+        <option value="" disabled selected>Choose your search option</option>
+        <option value="recipe_name">Name</option>
+        <option value="difficulty"
+          >Difficulty (Easy, Intermediate, Hard, Masterchef)
+        </option>
+        <option value="cooking_time">Cooking Time (mins)</option>
+        <option value="added_by">Added By</option>
+      </select>
+    </div>
+    <div class="col s4">
+      <input id="search" name="search" placeholder="Search" />
+    </div>
 
-			<div class="col s4">
-				<button class="btn-floating btn-large red" type="submit">
-            <i class="large material-icons">search</i>
-        </button>
-			</div>
-	</form>
-	<div class="row search-results"></div>
-	<ul>
-		{% for recipe in search_content %}
+    <div class="col s4">
+      <button class="btn-floating btn-large red" type="submit">
+        <i class="large material-icons">search</i>
+      </button>
+    </div>
+  </form>
+  </div>
+  <div class="row search-results">
+    {% if search_content %}
+    <h5> Results </h5>
+    {% endif %}
+    {% for recipe in search_content %}
+        <div class="col s7">
+           
+                <a> {{ recipe.recipe_name }} </a>
+                <p>
+                Cooking Time - {{ recipe.cooking_time }} mins <br />
+                Difficulty - {{ recipe.difficulty.capitalize() }}
+                </p>
+            
+        </div>
 
-		<li><a> {{ recipe.recipe_name }} </a>
-			<p> Cooking Time - {{ recipe.cooking_time }} mins <br/>
-                Difficulty - {{ recipe.difficulty.capitalize() }} 
-            </p>
-		</li>
-		{% endfor %}
-	</ul>
-</div>
-
+    <div class="col s12 divider"></div>
+    {% endfor %}
+  </div>
 
 
 <h5>My Recipes</h5>
 {% if recipes %}
 <ul>
-	{% for recipe in recipes %}
+  {% for recipe in recipes %}
 
-	<li>
-		<div class="row">
-			<div class="col s6">
-				<a href="{{url_for('get_loggedinrecipe', recipe_name=recipe.recipe_name).replace('fake_name', recipe.recipe_name)}}">
-					{{ recipe.recipe_name }} </a>
-				<p> Cooking time - {{ recipe.cooking_time }} mins
-					<br/> Difficulty - {{ recipe.difficulty.capitalize() }}</p>
-			</div>
-			<div class="col s3">
-				<a class="btn waves-effect waves-light"
-					href="{{url_for('edit_recipe', recipe_name=recipe.recipe_name)}}" methods="POST">
-					Edit
-					<i class="material-icons right">playlist</i>
-				</a>
-			</div>
-			<div class="col s3">
-				<a class="btn waves-effect waves-light" href="">
-					Delete
-					<i class="material-icons right">remove</i>
-				</a>
-			</div>
-		</div>
-	</li>
-	{% endfor %}
+  <li>
+    <div class="row">
+      <div class="col s6">
+        <a
+          href="{{url_for('get_loggedinrecipe', recipe_name=recipe.recipe_name).replace('fake_name', recipe.recipe_name)}}"
+        >
+          {{ recipe.recipe_name }}
+        </a>
+        <p>
+          Cooking time - {{ recipe.cooking_time }} mins <br />
+          Difficulty - {{ recipe.difficulty.capitalize() }}
+        </p>
+      </div>
+      <div class="col s3">
+        <a
+          class="btn waves-effect waves-light" href="{{url_for('edit_recipe', recipe_name=recipe.recipe_name)}}" methods="POST"
+        >
+          Edit
+          <i class="material-icons right">playlist</i>
+        </a>
+      </div>
+      <div class="col s3">
+        <a class="btn waves-effect waves-light" href="">
+          Delete
+          <i class="material-icons right">remove</i>
+        </a>
+      </div>
+      <div class="col s12 divider"></div>
+    </div>
+  </li>
+  {% endfor %}
 </ul>
 {% else %}
 <p>You have not currently added any recipes</p>
@@ -76,13 +91,30 @@
 
 {% if user.favourites %}
 <ul>
-{% for recipe in user.favourites %}
-<li><a href="{{url_for('get_loggedinrecipe', recipe_name=recipe)}}"> {{ recipe }} </a></li>
+  {% for recipe in user.favourites %}
+  <div class="row">
+    <div class="col s6">
+      <li>
+        <a href="{{url_for('get_loggedinrecipe', recipe_name=recipe)}}">
+          {{ recipe }}
+        </a>
+      </li>
+    </div>
 
-{% endfor %}
+    <div class="col s4">
+      <a
+        class="btn waves-effect waves-light"
+        href="{{url_for('remove_favourite', recipe_name=recipe)}}"
+        method="POST"
+      >
+        Remove from Favourites
+        <i class="material-icons right">cancel</i>
+      </a>
+    </div>
+    <div class="col s12 divider"></div>
+  </div>
+  {% endfor %}
 </ul>
 {% else %}
 <p>You have not currently favourited any recipes</p>
 {% endif %} {% endblock %}
-</li>
-</ul>

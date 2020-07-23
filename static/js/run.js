@@ -2,6 +2,10 @@ $(document).ready(function () {
   $("select").material_select();
 });
 
+$(document).ready(function(){
+    $('.sidenav').sidenav();
+  }) 
+  
 function add_ingredients() {
   var el = $(".additional_ingredients");
   el.append(`
