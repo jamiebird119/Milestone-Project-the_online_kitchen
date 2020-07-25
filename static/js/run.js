@@ -2,9 +2,7 @@ $(document).ready(function () {
   $("select").material_select();
 });
 
-$(document).ready(function(){
-    $('.sidenav').sidenav();
-  }) 
+
   
 function add_ingredients() {
   var el = $(".additional_ingredients");
@@ -26,10 +24,11 @@ function add_ingredients() {
           name="ingredient_quantity"
         />
     </div>
+    <div class="col s2">
 	<a class="btn-floating btn-large waves-effect waves-light red"
-				onclick="remove_ingredients()">
+				onclick="remove_ingredients($(this))">
                 <i class="material-icons">remove</i>
-                </a></div>
+                </a></div></div>
                 `		);}
 
   
