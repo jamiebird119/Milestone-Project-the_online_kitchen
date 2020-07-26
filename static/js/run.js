@@ -1,9 +1,11 @@
 $(document).ready(function () {
-  $("select").material_select();
+  $(".sidenav").sidenav();
 });
 
+$(document).ready(function () {
+  $("select").formSelect();
+});
 
-  
 function add_ingredients() {
   var el = $(".additional_ingredients");
   el.append(`
@@ -29,13 +31,17 @@ function add_ingredients() {
 				onclick="remove_ingredients($(this))">
                 <i class="material-icons">remove</i>
                 </a></div></div>
-                `		);}
-
-  
+                `);
+}
 
 function remove_ingredients(el) {
- var element = el.parent("div").parent(".added")
+  var element = el.parent("div").parent(".added");
   element.remove();
 }
 
-
+$("a h5").mouseenter(function () {
+    $(this).addClass("underline");
+});
+$("a h5").mouseleave(function () {
+    $(this).removeClass("underline");
+});
