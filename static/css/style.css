@@ -16,15 +16,26 @@ body{
     text-decoration: underline;
 }
 
-.brand-logo{
-    width: 100%;
-    text-align: center;
+nav .brand-logo{
+    width: 90%;
+    font-size: 1.6rem;
+    text-align: right;
+    
 }
 
 .intro{
     padding: 1rem 0;
 }
 
-
+.advert{
+    width: 100%;
+    text-align: center;
+}
 /* ---------------------------------------- Responsive Design Elements --------------------------------------------------------------------*/
 
+@media only screen and (min-width:600px){
+   nav .brand-logo{
+    width: 30%;
+    text-align: left;
+}
+}

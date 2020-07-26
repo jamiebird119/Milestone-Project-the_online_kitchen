@@ -1,11 +1,11 @@
 {% extends 'base.html' %} {% block content %}
-<h4> Register now to add your own recipes and favourite recipes you like. </h4>
+<h5> Register now to add your own recipes and favourite recipes you like! </h5>
 <div class="alert">
 <h5> <strong> {{ alert }} </strong> </h5>
 </div>
 <form class="col s12" action="{{ url_for('adduser')}}" method="POST">
   <div class="row">
-    <div class="input-field col s6">
+    <div class="input-field col s12 m6">
       <input
         id=" first_name"
         name="first_name"
@@ -15,7 +15,7 @@
       />
       <label for="first_name">First Name</label>
     </div>
-    <div class="input-field col s6">
+    <div class="input-field col s12 m6">
       <input
         id=" last_name"
         name="last_name"
@@ -27,9 +27,9 @@
     </div>
   </div>
   <div class="row">
-    <div class="input-field col s6">
+    <div class="input-field col s12 m6">
       <input
-        id="username"
+        id="username3"
         name="username"
         type="text"
         class="validate"
@@ -37,9 +37,9 @@
       />
       <label for="first_name">Username</label>
     </div>
-    <div class="input-field col s6">
+    <div class="input-field col s12 m6">
       <input
-        id="password"
+        id="password3"
         name="password"
         type="text"
         class="validate"
