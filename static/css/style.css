@@ -1,29 +1,48 @@
 
 /* ---------------------------------------- General Classes  --------------------------------------------------------------------*/
-
+html{
+    width: 100vw;
+    padding:0;
+}
 body{
     background-color: rgb(250,250,250);
     padding: 0;
-    width: auto;
-    height: 100vh;
+    width: 100%;
 }
 
 .footer{
     background-color: #ee6e73;
     height: 4rem;
+    padding:0 ;
 }
-.section_heading{
-    padding: 1rem 0;
+nav .nav-wrapper {
+    padding:0;
 }
-
 .underline{
     text-decoration: underline;
 }
 
+nav ul {
+    padding: 0;
+    margin: 0 1rem;
+    
+}
+.row .col{
+    padding: 0;
+    
+}
+.col .row{
+    margin-left: 0;
+    margin-right: 0;
+}
+.drag-target{
+    width:0px;
+}
 nav .brand-logo{
-    width: 90%;
-    font-size: 1.6rem;
-    text-align: right;
+    height: inherit;
+    width:auto;
+    font-size: 1.3rem;
+    text-align: center;
     
 }
 
@@ -33,20 +52,25 @@ nav .brand-logo{
 
 .advert{
     text-align: center;
-    width:100%
+    width:90%;
+    
 }
 
+.advert-containers a{
+    margin: 0 auto;
+}
 .advert-side{
     display: none;
 
 }
+
+input{
+    margin: 0 1rem;
+}
 /* ---------------------------------------- Responsive Design Elements --------------------------------------------------------------------*/
 
 @media only screen and (min-width:600px){
-   nav .brand-logo{
-    width: 30%;
-    text-align: left;
-}
+   
     .advert-side{
         display: inline-flex;
         margin: 4rem auto; 

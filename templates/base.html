@@ -24,7 +24,7 @@
   <body>
     <nav>
       <div class="nav-wrapper navbar-fixed">
-        <a href="{{url_for('home')}}" class="brand-logo">The Online Cookbook</a>
+        <a href="{{url_for('home')}}" class="brand-logo">  The Online Cookbook</a>
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"
           ><i class="material-icons">menu</i></a
         >
@@ -100,11 +100,11 @@
         </button>
       </li>
     </ul>
-    <div class="row">
+    <div class="row no-gutters">
       <div class="col s12 m8 offset-m1">
         {% block content %} {% endblock %}
       </div>
-      <div class="col s0 m3">
+      <div class="col s0 m3 advert-containers">
         <a href="https://globalknives.uk/"
           ><img
             class="advert-side"
