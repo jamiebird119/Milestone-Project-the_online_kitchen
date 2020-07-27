@@ -21,7 +21,7 @@ mongo = PyMongo(app)
 @app.route("/home")
 def home():
     return render_template("index.html",
-                           featured_list=mongo.db.recipes.find().limit(10))
+                           featured_list=mongo.db.recipes.find().limit(5))
 
 
 @app.route("/addrecipe")

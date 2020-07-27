@@ -8,6 +8,10 @@ body{
     height: 100vh;
 }
 
+.footer{
+    background-color: #ee6e73;
+    height: 4rem;
+}
 .section_heading{
     padding: 1rem 0;
 }
@@ -28,8 +32,13 @@ nav .brand-logo{
 }
 
 .advert{
-    width: 100%;
     text-align: center;
+    width:100%
+}
+
+.advert-side{
+    display: none;
+
 }
 /* ---------------------------------------- Responsive Design Elements --------------------------------------------------------------------*/
 
@@ -38,4 +47,18 @@ nav .brand-logo{
     width: 30%;
     text-align: left;
 }
+    .advert-side{
+        display: inline-flex;
+        margin: 4rem auto; 
+        width: 100%;
+        height:auto;
+        
+    }
+}
+
+@media only screen and (min-width:1025px){
+    .advert{
+    display: none;
+}
+
 }
