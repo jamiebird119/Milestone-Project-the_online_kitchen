@@ -20,6 +20,7 @@
          />
    </head>
    <body>
+   <div class="content">
       <nav>
          <div class="nav-wrapper navbar-fixed">
             <a href="{{url_for('userhome', username=session.username)}}" class="brand-logo">  The Online Cookbook</a>
@@ -38,8 +39,8 @@
          <li><a href="{{ url_for('adduserrecipe')}}">Add Recipe</a></li>
          <li><a href="{{ url_for('logout')}}">Log Out</a></li>
       </ul>
-      <div class="row no-gutters">
-      <div class="col s12 m7 offset-m1">
+      <div class="row">
+      <div class="col offset-s1 s10 s1-offset m7 offset-m1">
         {% block content %} {% endblock %}
       </div>
       <div class="col s0 m3 m1-offset">
@@ -50,8 +51,8 @@
         /></a>
       </div>
     </div>
-    <div class="row no-gutters">
-      <div class="col s12 m0 advert-containers">
+    <div class="row">
+      <div class="col offset-s1 s10 s1-offset m0 advert-containers">
         <a href="https://globalknives.uk/"
           ><img
             class="advert"
@@ -59,6 +60,7 @@
         /></a>
       </div>
     </div>
+</div>
 <footer class="footer page-footer">
     
             <div class="container">

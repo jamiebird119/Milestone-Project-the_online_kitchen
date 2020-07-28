@@ -2,7 +2,7 @@
 
 <h3>Add Recipe</h3>
 <div class="row">
-  <form class="col s12" action="{{ url_for('insert_recipe')}}" method="POST">
+  <form class="col s11 offset-s1" action="{{ url_for('insert_recipe')}}" method="POST">
     <div class="row">
       <div class="input-field col s6">
         <input
@@ -29,9 +29,9 @@
       </div>
     </div>
 
-    <h5>Ingredients</h5>
+    <h5 class="section-header">Ingredients</h5>
     <div class="row">
-      <div class="input-field col s5 ingredients">
+      <div class="input-field col s4 m5 ingredients original-ingredients">
         <input
           id="ingredient"
           name="ingredient"
@@ -39,9 +39,9 @@
           class="validate"
           required
         />
-        <label for="ingredient">Ingredient Name</label>
+        <label for="ingredient">Name</label>
       </div>
-      <div class="input-field col s5 quantity">
+      <div class="input-field col s4 m5 ingredients original-ingredients">
         <input
           id="ingredient_quantity"
           name="ingredient_quantity"
@@ -49,13 +49,13 @@
           class="validate"
           required
         />
-        <label for="ingredient_quantity">Ingredient Quantity</label>
+        <label for="ingredient_quantity">Quantity</label>
       </div>
       <div class="additional_ingredients col s12">
       </div>
       <div class="col s4">
         <a
-          class="btn-floating btn-large waves-effect waves-light red"
+          class="btn-floating btn-small waves-effect waves-light red"
           onclick="add_ingredients()"
           ><i class="material-icons">add</i></a
         >
@@ -69,7 +69,7 @@
           id="method"
           class="materialize-textarea"
           name="method"
-          style="height: 250px;"
+          style="height: 150px;"
         ></textarea>
         <label for="method">Method</label>
       </div>

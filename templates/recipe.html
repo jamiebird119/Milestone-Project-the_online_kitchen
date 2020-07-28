@@ -2,15 +2,15 @@
 
 <div class="row">
   <div class="col s6">
-    <h3>{{ recipe.recipe_name }}</h3>
+    <h3 class="section-header">{{ recipe.recipe_name }}</h3>
   </div>
   <div class="col s6">
     <button
-      class="btn waves-effect waves-light"
+      class="btn waves-effect waves-light playlist"
       name="action"
       onclick="add_favourite('{{recipe.recipe_name}}')"
     >
-      Add to Favourites
+      Add Favourite
       <i class="material-icons right">playlist_add</i>
     </button>
   </div>
@@ -34,7 +34,7 @@
 
   {% endfor %}
 </table>
-<h5>Method</h5>
+<h5 class="section-header">Method</h5>
 <ol>
   {% for item in recipe.method %} {% if item == '' %}
   <br />
