@@ -77,6 +77,7 @@ def edit_recipe(recipe_name):
 
 @app.route("/remove_recipe/<recipe_name>")
 def remove_recipe(recipe_name):
+    mongo.db.recipes.remove({"recipe_name": recipe_name})
     return render_template('userhome.html',
                            user=mongo.db.users.find_one(
                                {"username": session["username"]}),
