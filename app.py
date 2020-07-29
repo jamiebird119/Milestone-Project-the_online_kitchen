@@ -46,9 +46,7 @@ def insert_recipe():
               "cooking_time": cooking_time}
     recipes.insert_one(recipe)
     return render_template('recipe.html',
-                           recipe=recipe,
-                           user=mongo.db.users.find_one({
-                               "username": session["username"]}))
+                           recipe=recipe)
 
 
 @app.route("/get_recipe/<recipe_name>")
