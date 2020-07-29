@@ -9,7 +9,7 @@
 <div class="row">
     <h4 class="section_heading">Search for a recipe</h4>
     <form action="{{url_for('search')}}" method="POST">
-        <div class="col s12 m6 l3">
+        <div class="col s12 m4  l3">
             <select id="search_var" name="variable" required>
                 <!-- Select option taken from https://materializecss.com/select.html -->
                 <option value="" disabled selected>Choose your search option</option>
@@ -19,13 +19,13 @@
                 <option value="added_by">Added By</option>
             </select>
         </div>
-        <div class="col s10 m4 l4">
+        <div class="col s10 m4 offset-m1 l3 offset-l1">
             <input id="search" name="search" placeholder="Search" required />
         </div>
 
         <div class="col s2 m2 l3">
             <!-- Button element taken from https://materializecss.com/buttons.html -->
-            <button class="btn-floating btn-large red" type="submit">
+            <button class="btn-floating btn-medium red" type="submit">
                 <i class="large material-icons">search</i>
             </button>
         </div>

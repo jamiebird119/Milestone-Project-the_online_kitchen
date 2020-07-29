@@ -60,6 +60,7 @@
     {% endif %} {% endfor %}
 </ol>
 <script>
+    // Saves recipe to favourite in user database - first checks user exists before calling python api
     function add_favourite(recipe_name){
         let urlFor;
         let toastMessage;
@@ -77,6 +78,7 @@
             $(".favourite").addClass("grey")
         });
     }
+    // Removes recipe from favourites
     function remove_favourite(recipe_name){
         let urlFor;
         let toastMessage;
