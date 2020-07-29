@@ -1,14 +1,17 @@
+// Collapsible nav bar initialiser
 $(document).ready(function () {
-  $(".sidenav").sidenav();
+    $(".sidenav").sidenav();
 });
 
+// Select Initialiser
 $(document).ready(function () {
-  $("select").formSelect();
+    $("select").formSelect();
 });
 
+// Function to add ingredient line to add recipe/edit recipe form 
 function add_ingredients() {
-  var el = $(".additional_ingredients");
-  el.append(`
+    var el = $(".additional_ingredients");
+    el.append(`
     <div class="row added">
     <div class="input-field col s4 m5 ingredients">
 				<input
@@ -34,11 +37,13 @@ function add_ingredients() {
                 `);
 }
 
+// Function to remove selected ingredient line from add recipe/edit recipe form
 function remove_ingredients(el) {
-  var element = el.parent("div").parent(".added");
-  element.remove();
+    var element = el.parent("div").parent(".added");
+    element.remove();
 }
 
+// Hover effect on recipe
 $("a h5").mouseenter(function () {
     $(this).addClass("underline");
 });

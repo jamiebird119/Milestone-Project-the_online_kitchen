@@ -160,7 +160,7 @@ def add_favourite(recipe_name):
                            username=session["username"])
 
 
-@app.route('/remove_favourite/<recipe_name>')
+@app.route('/remove_favourite/<recipe_name>', methods=["POST"])
 def remove_favourite(recipe_name):
     user = mongo.db.users.find_one({"username": session["username"]})
     favourites = user["favourites"]

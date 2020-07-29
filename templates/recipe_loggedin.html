@@ -1,36 +1,31 @@
 {% extends 'loggedin.html' %} {% block content %}
 
 <div class="row">
-  <div class="col s6">
-    <h4 class="section-header">{{ recipe.recipe_name }}</h4>
-  </div>
-  <div class="col s6">
-    {% if not user.favourites %}
-    <button
-      class="btn waves-effect waves-light playlist"  name="action" onclick="add_favourite('{{recipe.recipe_name}}')"
-    >
-      Add Favourite
-      <i class="material-icons right">playlist_add</i>
-    </button>
-    {% else %}
-     
-     {% if recipe.recipe_name in user.favourites %}
-    <button class="btn waves-effect waves-light playlist orange" type="submit" name="action" onclick="remove_favourite('{{recipe.recipe_name}}')">
-      Remove Favourite
-      <br>
-      <i class="material-icons center">cancel</i>
-    </button>
-    
-    {% else %}
-    <button
-      class="btn waves-effect waves-light playlist" type="submit" name="action" onclick="add_favourite('{{recipe.recipe_name}}')"
-    >
-      Add Favourite
-      <i class="material-icons right">playlist_add</i>
-    </button>
-    {% endif %}
-    {% endif %}
-  </div>
+    <div class="col s6">
+        <h4 class="section-header">{{ recipe.recipe_name }}</h4>
+    </div>
+    <div class="col s6">
+        <!-- if statement checks if user has favourites and if recipe is in already and uses corresponding action button -->
+        {% if not user.favourites %}
+        <!-- Button element taken from https://materializecss.com/buttons.html -->
+        <button class="btn waves-effect waves-light playlist favourite" name="action" onclick="add_favourite('{{recipe.recipe_name}}')">
+            Add Favourite
+            <i class="material-icons right">playlist_add</i>
+        </button>
+        {% else %} {% if recipe.recipe_name in user.favourites %}
+        <button class="btn waves-effect waves-light playlist orange favourite" type="submit" name="action" onclick="remove_favourite('{{recipe.recipe_name}}')">
+            Remove Favourite
+            <br />
+            <i class="material-icons center">cancel</i>
+        </button>
+
+        {% else %}
+        <button class="btn waves-effect waves-light playlist favourite" type="submit" name="action" onclick="add_favourite('{{recipe.recipe_name}}')">
+            Add Favourite
+            <i class="material-icons right">playlist_add</i>
+        </button>
+        {% endif %} {% endif %}
+    </div>
 </div>
 
 <h5>Added by - {{ recipe.added_by }}</h5>
@@ -39,53 +34,59 @@
 
 <p>Difficulty - {{ recipe.difficulty.capitalize() }}</p>
 <table>
-  <tr>
-    <td><strong>Ingredients </strong></td>
-    <td><strong>Quantity </strong></td>
-  </tr>
-  {% for ingredient, quantity in recipe.ingredients %}
-  <tr>
-    <td>{{ ingredient }}</td>
-    <td>{{ quantity}}</td>
-  </tr>
+    <tr>
+        <td><strong>Ingredients </strong></td>
+        <td><strong>Quantity </strong></td>
+    </tr>
+    {% for ingredient, quantity in recipe.ingredients %}
+    <tr>
+        <td>{{ ingredient }}</td>
+        <td>{{ quantity}}</td>
+    </tr>
 
-  {% endfor %}
+    {% endfor %}
 </table>
-<h4> Method </h4>
+<div class="row">
+    <div class="col s12 m0 advert-containers">
+        <a href="https://globalknives.uk/"><img class="advert" src="{{ url_for('static', filename='images/global-knives-homepage-banner-text.jpg') }}" /></a>
+    </div>
+</div>
+<h4 class="section-header">Method</h4>
 <ol>
-{% for line in recipe.method %}
-{% if line == '' %}
-<br>
-{% else %}
-<li> {{line}} </li>
-{% endif %}
-{% endfor %}
+    {% for line in recipe.method %} {% if line == '' %}
+    <br />
+    {% else %}
+    <li>{{line}}</li>
+    {% endif %} {% endfor %}
 </ol>
 <script>
-  function add_favourite(recipe_name){
-      let urlFor;
-      let toastMessage;
-      {% if 'username' in session %}
-          urlFor = "{{url_for('add_favourite', recipe_name='fake_name')}}".replace('fake_name', recipe_name)
-          toastMessage = "Recipe added to your favourites"
-          ;
-      {% else %}
-          toastMessage = "Please login or register to add recipes to your favourites"
-          alert(toastMessage);
+    function add_favourite(recipe_name){
+        let urlFor;
+        let toastMessage;
+        {% if 'username' in session %}
+            urlFor = "{{url_for('add_favourite', recipe_name='fake_name')}}".replace('fake_name', recipe_name)
+            toastMessage = "Recipe added to your favourites";
 
-      {% endif %}
-      $.ajax({type:'POST', url: urlFor}).done(function(){
-          alert(toastMessage)
-      });
-  }
-  function remove_favourite(recipe_name){
-      let urlFor;
-      let toastMessage;
-        urlFor = "{{url_for('remove_favourite', recipe_name='fake_name')}}".replace('fake_name', recipe_name)
-        toastMessage = "Recipe removed from favourites"
-      $.ajax({type:'POST', url: urlFor}).done(function(){
-          alert(toastMessage)
-      });
-  }
+        {% else %}
+            toastMessage = "Please login or register to add recipes to your favourites"
+            alert(toastMessage);
+
+        {% endif %}
+        $.ajax({type:'POST', url: urlFor}).done(function(){
+            alert(toastMessage)
+            $(".favourite").addClass("grey")
+        });
+    }
+    function remove_favourite(recipe_name){
+        let urlFor;
+        let toastMessage;
+          urlFor = "{{url_for('remove_favourite', recipe_name='fake_name')}}".replace('fake_name', recipe_name)
+          toastMessage = "Recipe removed from favourites"
+        $.ajax({type:'POST', url: urlFor}).done(function(){
+            alert(toastMessage)
+            $(".favourite").removeClass("orange");
+            $(".favourite").addClass("grey")
+        });
+    }
 </script>
 {% endblock %}

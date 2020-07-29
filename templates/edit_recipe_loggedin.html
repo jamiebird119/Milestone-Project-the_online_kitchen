@@ -1,130 +1,116 @@
 {% extends 'loggedin.html' %} {% block content %}
 
-<h3>Add Recipe</h3>
+<h3 class="section-header">Edit Recipe</h3>
 <div class="row">
-  <form
-    class="col s12"
-    action="{{ url_for('updaterecipe', id=recipe._id)}}"
-    method="POST"
-  >
-    <div class="row">
-      <div class="input-field col s6">
-        <input
-          id="recipe_name"
-          name="recipe_name"
-          type="text"
-          class="validate"
-          value="{{recipe.recipe_name}}"
-          required
-        />
-        <label for="recipe_name">Recipe Name</label>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="input-field col s6">
-        <input
-          id="added_by"
-          name="added_by"
-          type="text"
-          class="validate"
-          value="{{recipe.added_by}}"
-          disabled
-          required
-        />
-        <label for="first_name">Added by (username)</label>
-      </div>
-    </div>
-
-    <h5>Ingredients</h5>
-
-    <div class="row">
-      {% for item in recipe.ingredients %} {% if loop.index == 1 %}
-      <div class="input-field col s5 ingredients">
-        <input id="ingredient" name="ingredient" type="text" class="validate" value="{{ item[0] }}" required>
-        <label for="ingredient">Ingredient Name</label>
-      </div>
-      <div class="input-field col s5 quantity">
-        <input id="ingredient_quantity" name="ingredient_quantity" type="text" value="{{ item[1] }}" class="validate" required>
-        <label for="ingredient_quantity">Ingredient Quantity</label>
-        {% endif %} {% endfor %}
-      </div>
-      <div class="additional_ingredients">
-        {% for item in recipe.ingredients %} 
-        {% if loop.index != 1 %}
-        <div class="row added">
-          <div class="input-field col s5">
-            <input name="ingredient" type="text" class="validate added_ingredient" value="{{ item[0] }}">
-          </div>
-          <div class="input-field col s5">
-            <input type="text" class="validate added_quantity" name="ingredient_quantity" value="{{ item[1] }}">
-          </div>
-          <div class="col s2">
-          <a class="btn-floating btn-large waves-effect waves-light red" onclick="remove_ingredients($(this))">
-            <i class="material-icons">remove</i>
-          </a>
-          </div>
+    <form class="col s11 offset-s1" action="{{ url_for('updaterecipe', id=recipe._id)}}" method="POST">
+        <div class="row">
+            
+            <div class="input-field col s8 m6">
+                <input id="recipe_name" name="recipe_name" type="text" class="validate" value="{{recipe.recipe_name}}" required />
+                <label for="recipe_name">Recipe Name</label>
+            </div>
         </div>
-        {% endif %} {% endfor %}
-      </div>
 
-      <div class="col s4">
-        <a class="btn-floating btn-large waves-effect waves-light red" onclick="add_ingredients()">
-            <i class="material-icons">add</i>
-        </a>
-      </div>
-    </div>
+        <div class="row">
+            <div class="input-field col s8 m6">
+                <input id="added_by" name="added_by" type="text" class="validate" value="{{recipe.added_by}}" disabled required />
+                <label for="first_name">Added by (username)</label>
+            </div>
+        </div>
 
-    <div class="row">
-      <div class="input-field col s12">
-        <textarea id="method" class="materialize-textarea" name="method" style="height: 250px;">
+        <h5 class="section-header">Ingredients</h5>
+
+        <div class="row">
+            {% for item in recipe.ingredients %} {% if loop.index == 1 %}
+            <div class="input-field col s4 m5 ingredients original-ingredients">
+                <input id="ingredient" name="ingredient" type="text" class="validate" value="{{ item[0] }}" required />
+                <label for="ingredient">Ingredient Name</label>
+            </div>
+            <div class="input-field col s4 m5 ingredients original-ingredients">
+                <input id="ingredient_quantity" name="ingredient_quantity" type="text" value="{{ item[1] }}" class="validate" required />
+                <label for="ingredient_quantity">Ingredient Quantity</label>
+                {% endif %} {% endfor %}
+            </div>
+            <div class="additional_ingredients">
+                <!-- for and if loop to add ingredient line for each ingredient after first set as all but first set removable - At least one ingredient and quantity must be present  -->
+                {% for item in recipe.ingredients %} {% if loop.index != 1 %}
+                <div class="row added">
+                    <div class="input-field col s4 m5 ingredients">
+                        <input name="ingredient" type="text" class="validate added_ingredient" value="{{ item[0] }}" />
+                    </div>
+                    <div class="input-field col s4 m5 ingredients">
+                        <input type="text" class="validate added_quantity" name="ingredient_quantity" value="{{ item[1] }}" />
+                    </div>
+                    <div class="col s1">
+                        <a class="btn-floating btn-small waves-effect waves-light red" onclick="remove_ingredients($(this))">
+                            <i class="material-icons">remove</i>
+                        </a>
+                    </div>
+                </div>
+                {% endif %} {% endfor %}
+            </div>
+
+            <div class="col s4">
+                <a class="btn-floating btn-large waves-effect waves-light red" onclick="add_ingredients()">
+                    <i class="material-icons">add</i>
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col offset-s1 s10 s1-offset m0 advert-containers">
+                <a href="https://globalknives.uk/"><img class="advert" src="{{ url_for('static', filename='images/global-knives-homepage-banner-text.jpg') }}" /></a>
+            </div>
+            <div class="input-field col s12">
+                <!-- Textarea element taken from https://materializecss.com/text-inputs.html -->
+                <textarea id="method" class="materialize-textarea" name="method" style="height: 9.3rem;">
         {% for item in recipe.method %} 
         {{ item }}
-        {% endfor %}</textarea>
-        <label for="method">Method</label>
-      </div>
-    </div>
-    <div class="row">
-      <div class="input-field col s12">
-        <select id="difficulty" name="difficulty">
-          <option value="" disabled>Choose your option</option>
-          {% if recipe.difficulty == "Easy" %}
-            <option selected value="Easy">Easy</option>
-          {% else %}
-            <option value="Easy">Easy</option>
-          {% endif %}
-          {% if recipe.difficulty == "Intermediate" %}
-            <option selected value="Intermediate">Intermediate</option>
-          {% else %}
-            <option value="Intermediate">Intermediate</option>
-          {% endif %}
-          {% if recipe.difficulty == "Hard" %}
-            <option selected value="Hard">Hard</option>
-          {% else %}
-            <option value="Hard">Hard</option>
-          {% endif %}
-          {% if recipe.difficulty == "Masterchef" %}
-             <option selected value="Masterchef">Masterchef</option>
-          {% else %}
-            <option value="Masterchef">Masterchef</option>
-          {% endif %}
-        </select>
-        <label>Difficulty</label>
-      </div>
-    </div>
-    <div class="row">
-      <div class="input-field col s6">
-        <input id="cooking_time" name="cooking_time" type="text" class="validate" value="{{recipe.cooking_time}}">
-        <label for="cooking_time">Cooking Time (in mins)</label>
-      </div>
-    </div>
-    <div class="row">
-      <button class="btn waves-effect waves-light" type="submit" name="action">
-        Update Recipe
-        <i class="material-icons right">playlist_add</i>
-      </button>
-    </div>
-  </form>
+        {% endfor %}
+                </textarea>
+                <label for="method">Method</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <select id="difficulty" name="difficulty">
+                    <!-- Select option taken from https://materializecss.com/select.html / if statement to set value to current saved difficulty -->
+                    <option value="" disabled>Choose your option</option>
+                    {% if recipe.difficulty == "Easy" %}
+                    <option selected value="Easy">Easy</option>
+                    {% else %}
+                    <option value="Easy">Easy</option>
+                    {% endif %} {% if recipe.difficulty == "Intermediate" %}
+                    <option selected value="Intermediate">Intermediate</option>
+                    {% else %}
+                    <option value="Intermediate">Intermediate</option>
+                    {% endif %} {% if recipe.difficulty == "Hard" %}
+                    <option selected value="Hard">Hard</option>
+                    {% else %}
+                    <option value="Hard">Hard</option>
+                    {% endif %} {% if recipe.difficulty == "Masterchef" %}
+                    <option selected value="Masterchef">Masterchef</option>
+                    {% else %}
+                    <option value="Masterchef">Masterchef</option>
+                    {% endif %}
+                </select>
+                <label>Difficulty</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="cooking_time" name="cooking_time" type="text" class="validate" value="{{recipe.cooking_time}}" />
+                <label for="cooking_time">Cooking Time (in mins)</label>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Button element taken from https://materializecss.com/buttons.html -->
+            <button class="btn waves-effect waves-light" type="submit" name="action">
+                Update Recipe
+                <i class="material-icons right">playlist_add</i>
+            </button>
+        </div>
+    </form>
 </div>
 
 {% endblock %}

@@ -8,7 +8,9 @@ body{
     background-color: rgb(250,250,250);
     padding: 0;
     width: 100vw;
-    ;
+    transition: all 250ms ease-in-out;
+    overflow-x: hidden;
+    
 }
 
 .content{
@@ -25,6 +27,7 @@ body{
     background-color: #ee6e73;
     height: 4rem;
     padding:0 ;
+    width: 100vw;
 }
 nav .nav-wrapper {
     padding:0;
@@ -61,15 +64,16 @@ nav .brand-logo{
 
 .advert{
     text-align: center;
-    width:90%;
-   
+    width:100%;
+    height: auto;
+    margin: 1rem auto;
 }
 
 .cmd-button{
     width: 90%;
 }
 .advert-containers a{
-    margin: 0 auto;
+    margin: 2rem auto;
 }
 .advert-side{
     display: none;
@@ -104,14 +108,21 @@ input{
     font-size: 0.8rem;
     line-height: 1.2rem;
 }
+.register{
+    margin: 2rem 0;
+}
+
+.search{
+    margin-left: 1rem;
+}
 /* ---------------------------------------- Responsive Design Elements --------------------------------------------------------------------*/
 
 @media only screen and (min-width:600px){
    
     .advert-side{
         display: inline-flex;
-        margin: 4rem auto; 
-        width: 100%;
+        margin: 2rem 0 0 2rem; 
+        width: 90%;
         height:auto;
         
     }

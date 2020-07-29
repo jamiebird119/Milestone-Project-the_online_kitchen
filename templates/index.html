@@ -1,70 +1,67 @@
 {% extends 'base.html' %} {% block content %}
 <p><strong> {{ alert }} </strong></p>
 <div class="row">
-  <p class="intro">
-    This is the Online Cookbook. The place to share your personalised recipes
-    and discover new culinary delights.
-  </p>
+    <p class="intro">
+        This is the Online Cookbook. The place to share your personalised recipes and discover new culinary delights.
+    </p>
 </div>
 
 <div class="row">
-  <h4 class="section_heading">Search for a recipe</h4>
-  <form action="{{url_for('search')}}" method="POST">
-    <div class="col s12 m6 l3">
-      <select id="search_var" name="variable" required>
-        <option value="" disabled selected>Choose your search option</option>
-        <option value="recipe_name">Name</option>
-        <option value="difficulty"
-          >Difficulty (Easy, Intermediate, Hard, Masterchef)</option
-        >
-        <option value="cooking_time">Cooking Time (mins)</option>
-        <option value="added_by">Added By</option>
-      </select>
-    </div>
-    <div class="col s10 m4 l4">
-      <input id="search" name="search" placeholder="Search" required/>
-    </div>
+    <h4 class="section_heading">Search for a recipe</h4>
+    <form action="{{url_for('search')}}" method="POST">
+        <div class="col s12 m6 l3">
+            <select id="search_var" name="variable" required>
+                <!-- Select option taken from https://materializecss.com/select.html -->
+                <option value="" disabled selected>Choose your search option</option>
+                <option value="recipe_name">Name</option>
+                <option value="difficulty">Difficulty (Easy, Intermediate, Hard, Masterchef)</option>
+                <option value="cooking_time">Cooking Time (mins)</option>
+                <option value="added_by">Added By</option>
+            </select>
+        </div>
+        <div class="col s10 m4 l4">
+            <input id="search" name="search" placeholder="Search" required />
+        </div>
 
-    <div class="col s2 m2 l3">
-      <button class="btn-floating btn-large red" type="submit">
-        <i class="large material-icons">search</i>
-      </button>
-    </div>
-  </form>
+        <div class="col s2 m2 l3">
+            <!-- Button element taken from https://materializecss.com/buttons.html -->
+            <button class="btn-floating btn-large red" type="submit">
+                <i class="large material-icons">search</i>
+            </button>
+        </div>
+    </form>
 </div>
 <div class="row search-results">
     {% if search_content %}
-    <h4 class="section_heading"> Results </h4>
-    {% endif %}
-    {% for recipe in search_content %}
-        <div class="col s7">
-           
-                <a href="{{url_for('get_recipe', recipe_name=recipe.recipe_name)}}"><h5> {{ recipe.recipe_name }} </h5></a>
-                <p>
-                Cooking Time - {{ recipe.cooking_time }} mins <br />
-                Difficulty - {{ recipe.difficulty.capitalize() }}
-                </p>
-            
-        </div>
+    <h4 class="section_heading">Results</h4>
+    {% endif %} {% for recipe in search_content %}
+    <div class="col s7">
+        <a href="{{url_for('get_recipe', recipe_name=recipe.recipe_name)}}"><h5>{{ recipe.recipe_name }}</h5></a>
+        <p>
+            Cooking Time - {{ recipe.cooking_time }} mins <br />
+            Difficulty - {{ recipe.difficulty.capitalize() }}
+        </p>
+    </div>
 
     <div class="col s12 divider"></div>
     {% endfor %}
-  </div>
+</div>
 <div class="row">
-  <div class="col s6">
-    <h4 class="section_heading">Featured Recipes</h4>
-   </div>
-   
-      {% for featured in featured_list %}
-      <div class="col s12">
+    <div class="col s6">
+        <h4 class="section_heading">Featured Recipes</h4>
+    </div>
+
+    {% for featured in featured_list %}
+    <div class="col s12">
         <a href="{{url_for('get_recipe', recipe_name=featured.recipe_name)}}"><h5>{{ featured.recipe_name }}</h5></a>
-        <p>Cooking time - {{ featured.cooking_time}} mins <br/>
-        Added By - {{ featured.added_by }} <br/>
-        Difficulty - {{ featured.difficulty }}
+        <p>
+            Cooking time - {{ featured.cooking_time}} mins <br />
+            Added By - {{ featured.added_by }} <br />
+            Difficulty - {{ featured.difficulty }}
         </p>
-        </div>
-        <div class="col s12 divider"></div>
-        {% endfor %}
+    </div>
+    <div class="col s12 divider"></div>
+    {% endfor %}
 </div>
 
 {% endblock %}

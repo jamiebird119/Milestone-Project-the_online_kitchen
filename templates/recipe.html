@@ -1,19 +1,16 @@
 {% extends 'base.html' %} {% block content %}
 
 <div class="row">
-  <div class="col s6">
-    <h3 class="section-header">{{ recipe.recipe_name }}</h3>
-  </div>
-  <div class="col s6">
-    <button
-      class="btn waves-effect waves-light playlist"
-      name="action"
-      onclick="add_favourite('{{recipe.recipe_name}}')"
-    >
-      Add Favourite
-      <i class="material-icons right">playlist_add</i>
-    </button>
-  </div>
+    <div class="col s6">
+        <h3 class="section-header">{{ recipe.recipe_name }}</h3>
+    </div>
+    <div class="col s6">
+        <!-- Button element taken from https://materializecss.com/buttons.html -->
+        <button class="btn waves-effect waves-light playlist" name="action" onclick="add_favourite('{{recipe.recipe_name}}')">
+            Add Favourite
+            <i class="material-icons right">playlist_add</i>
+        </button>
+    </div>
 </div>
 
 <h5>Added by - {{ recipe.added_by }}</h5>
@@ -22,32 +19,32 @@
 
 <p>Difficulty - {{ recipe.difficulty.capitalize() }}</p>
 <table>
-  <tr>
-    <td><strong>Ingredients </strong></td>
-    <td><strong>Quantity </strong></td>
-  </tr>
-  {% for ingredient, quantity in recipe.ingredients %}
-  <tr>
-    <td>{{ ingredient }}</td>
-    <td>{{ quantity}}</td>
-  </tr>
+    <tr>
+        <td><strong>Ingredients </strong></td>
+        <td><strong>Quantity </strong></td>
+    </tr>
+    {% for ingredient, quantity in recipe.ingredients %}
+    <tr>
+        <td>{{ ingredient }}</td>
+        <td>{{ quantity}}</td>
+    </tr>
 
-  {% endfor %}
+    {% endfor %}
 </table>
 <h5 class="section-header">Method</h5>
 <ol>
-  {% for item in recipe.method %} {% if item == '' %}
-  <br />
-  {% else %}
-  <li>{{item}}</li>
-  {% endif %} {% endfor %}
+    {% for item in recipe.method %} {% if item == '' %}
+    <br />
+    {% else %}
+    <li>{{item}}</li>
+    {% endif %} {% endfor %}
 </ol>
+<!-- Added to promote engagement and increase likelihood of user registration -->
 <script>
-  function add_favourite(recipe_name) {
-    console.log("running");
-    let toastMessage;
-    toastMessage = "Please login or register to add recipes to your favourites";
-    alert(toastMessage);
-  }
+    function add_favourite(recipe_name) {
+        let toastMessage;
+        toastMessage = "Please login or register to add recipes to your favourites";
+        alert(toastMessage);
+    }
 </script>
 {% endblock %}
