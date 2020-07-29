@@ -75,7 +75,7 @@ def edit_recipe(recipe_name):
                                "recipe_name": recipe_name}))
 
 
-@app.route("/remove_recipe/<recipe_name>", methods=["POST"])
+@app.route("/remove_recipe/<recipe_name>")
 def remove_recipe(recipe_name):
     return render_template('userhome.html',
                            user=mongo.db.users.find_one(
