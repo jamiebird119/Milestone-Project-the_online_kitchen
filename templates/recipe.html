@@ -1,4 +1,8 @@
 {% extends 'base.html' %} {% block content %}
+{% if error is defined %}
+    {{error}}
+{% else %}
+    {{message}}
 
 <div class="row">
     <div class="col s6">
@@ -39,6 +43,8 @@
     <li>{{item}}</li>
     {% endif %} {% endfor %}
 </ol>
+
+{% endif %}
 <!-- Added to promote engagement and increase likelihood of user registration -->
 <script>
     function add_favourite(recipe_name) {

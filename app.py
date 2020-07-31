@@ -31,22 +31,24 @@ def addrecipe():
 
 @app.route("/insert_recipe/", methods=["POST"])
 def insert_recipe():
-    recipes = mongo.db.recipes
-    name = request.form.get("recipe_name")
-    added_by = request.form.get("added_by")
-    ingredients = zip(request.form.getlist("ingredient"),
-                      request.form.getlist("ingredient_quantity"))
-    method = request.form.get("method").splitlines()
-    difficulty = request.form.get("difficulty")
-    cooking_time = request.form.get("cooking_time")
-    recipe = {"recipe_name": name, "added_by": added_by.lower(),
-              "method": method,
-              "ingredients": list(ingredients),
-              "difficulty": difficulty,
-              "cooking_time": cooking_time}
-    recipes.insert_one(recipe)
-    return render_template('recipe.html',
-                           recipe=recipe)
+    try:
+        recipes = mongo.db.recipes
+        name = request.form.get("recipe_name")
+        added_by = request.form.get("added_by")
+        ingredients = zip(request.form.getlist("ingredient"),
+                          request.form.getlist("ingredient_quantity"))
+        method = request.form.get("method").splitlines()
+        difficulty = request.form.get("difficulty")
+        cooking_time = request.form.get("cooking_time")
+        recipe = {"recipe_name": name, "added_by": added_by.lower(),
+        "method": method,
+                  "ingredients": list(ingredients),
+                  "difficulty": difficulty,
+                  "cooking_time": cooking_time}
+        recipes.insert_one(recipe)
+        return render_template('recipe.html', recipe=recipe, message='Recipe Successfully Added')
+    except:
+        return render_template('recipe.html', error=str(e))
 
 
 @app.route("/get_recipe/<recipe_name>")
