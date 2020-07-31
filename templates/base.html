@@ -34,6 +34,7 @@
                                     LogIn!
                                 </button>
                             </li>
+                            <li><a href="{{ url_for('home')}}">Home</a></li>
                             <li><a href="{{ url_for('addrecipe')}}">Add Recipe</a></li>
                             <li><a href="{{url_for('register')}}">Register</a></li>
                         </ul>
@@ -42,6 +43,7 @@
             </nav>
             <!--Side Navbar element taken from https://materializecss.com/navbar.html for use on mobile and tablet resolution -->
             <ul class="sidenav navbar-fixed" id="mobile-demo">
+                <li><a href="{{ url_for('home')}}">Home</a></li>
                 <li><a href="{{ url_for('addrecipe')}}">Add Recipe</a></li>
                 <li><a href="{{url_for('register')}}">Register</a></li>
                 <form action="{{ url_for('login')}}" method="POST">
