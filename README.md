@@ -1,34 +1,104 @@
 # The Online Kitchen
-One or two paragraphs providing an overview of your project.
 
-Essentially, this part is your sales pitch.
+The Online Kitchen is a food blog site created for users to share and explore culinary experiences within an online community. Whether they are looking for instructions on a specific recipe 
+or wanting to share a long held secret family recipe the site has something for everyone and is driven by user created content. Aside from this it also contains 
+advertising for Global Knives, professional chef knives for use at home.
 
 ## UX
-Use this section to provide insight into your UX process, focusing on who this website is for, what it is that they want to achieve and how your project is the best way to help them achieve these things.
 
-In particular, as part of this section we recommend that you provide a list of User Stories, with the following general structure:
+The website was mainly aimed at people who like cooking and like food and have experience with the former. However, with the addition of the difficulty rating 
+for each recipe, it is hoped that it will also cater to a novice home cook as well. With an easy to use search function there are many ways to search other users content and 
+to then add that content to a list of favourites, meaning a user can easily come back to it. Adding a recipe is easy and can be done by guest users and registered users alike hopefully keeping a broad 
+range of content available to all. 
+
+* As a novice in the kitchen, I want to find a recipe that is easy, so that I can practice and improve my skills. 
+
+* As someone who does not know what to eat tonight, I am looking for a recipe, to provide me with inspiration. 
+
+* As a user with limited time, I want to find a recipe that does not take too long, so that I can make it quickly and save time. 
+
+* As an experienced home cook, I want to share a special take on a classic recipe that noone has tried before, to show everyone a different/ easier way of doing things. 
+
+* As a professional chef, I am looking to share some of my own recipes, so that I become more well known for my skills. 
+
+* As a cooking equipment supplier, I want to increase the outreach of my brand, so that I can boost sales and revenue. 
 
 As a user type, I want to perform an action, so that I can achieve a goal.
 This section is also where you would share links to any wireframes, mockups, diagrams etc. that you created as part of the design process. These files should themselves either be included as a pdf file in the project itself (in an separate directory), or just hosted elsewhere online and can be in any format that is viewable inside the browser.
 
 ## Features
-In this section, you should go over the different parts of your project, and describe each in a sentence or so.
+Featured recipes - A selection of up to 10 random recipes are displayed on the user home page.
+
+Recipe Search - The user can search for recipes via their name, the person who added them, the cooking time or the difficulty. 
+
+Register/Log In - A user can choose to become a member of the site by registering and logging in (see favourite recipe). 
+
+Add recipe - A recipe can be added using the form available in an easy to use and responsive way. 
+
+Edit Recipe - A recipe can be editted once a user is logged in to correct any errors. 
+
+Remove recipe - Should a user think better about sharing a recipe and want to remove it this can be completed from the user home page. 
+
+Favourite recipe - For members of the site, recipes can be added to a list of favourites, meaning that the user can come back to them later. They can also remove from this list if they tried a recipe and don't like it. 
 
 ### Existing Features
-Feature 1 - allows users X to achieve Y, by having them fill out Z
-...
-For some/all of your features, you may choose to reference the specific project files that implement them, although this is entirely optional.
+Recipe Search - allows users in search of a recipe to find recipes, by having them fill out the search box and select box on the index.html or userhome.html page. 
 
-In addition, you may also use this section to discuss plans for additional features to be implemented in the future:
+Register/Log In - allows users to become members, by having them fill out the registration form by clicking sign-up on any of the base.html versions and filling out the register.html form. 
+                - allows users who are members to log in, by having them fill in their username and password in the nav area and clicking login button. 
+
+Add recipe - allows users who want to share recipes to add one to the website content, by clicking add recipe and filling out the form on add_recipe.html or add_recipe_loggedin.html.
+
+Edit recipe - allows user who are logged in to edit any of the recipes they have added, by clicking the edit button on the userhome.html page and adding any changes to the fields for current data. 
+
+Remove recipe - allows users who have previously added a recipe to remove a recipe, by clicking the remove button on the userhome.html page for the recipe they want to delete. 
+
+Favourite Recipe - allows members to save recipes created by others to view later, by clicking the 'Add to favourites' button on the recipe_loggedin.html page for that specific recipe. 
+Remove Favourite - allows members who have previously saved a recipe to favourites to remove it from the list, by either clicking remove favourite on the userhome.html page or on the recipe_loggedin.html page. 
+
 
 ### Features Left to Implement
-Another feature idea
+Comment/review section for each recipe - this will boost engagement between users. Could also add a rating system to each recipe. 
+
+Internal contact system where users can message each other about recipes and share ideas as well as contacting the site admins.
+
+Add Image/Video files when adding recipes to provide instruction or show what it should look like. 
+
+Recommended recipes based off members previous searches/ a user rating system. 
+
+Adding preparation time to the recipe information. 
 
 ## Technologies Used
 In this section, you should mention all of the languages, frameworks, libraries, and any other tools that you have used to construct this project. For each, provide its name, a link to its official site and a short sentence of why it was used.
 
-JQuery
+# JQuery
 The project uses JQuery to simplify DOM manipulation.
+https://jquery.com/
+
+# Materialize JS and CSS 
+The project uses materialize to aid content development
+http://materializecss.com/
+
+# Flask
+The project uses the flask micro framework to provide background functionality and routing
+https://en.wikipedia.org/wiki/Flask_(web_framework)
+
+# Flask PyMongo
+The project uses Flask.pymongo to allow flask to interact with the database collection.
+https://flask-pymongo.readthedocs.io/en/latest/
+
+# Werkzeug
+The project uses Werkzeug.security to provide hash and salt for password security 
+https://werkzeug.palletsprojects.com/en/1.0.x/utils/
+
+# BSON
+The project uses BSON to interact with cursor ID objects.
+https://docs.mongodb.com/manual/reference/method/ObjectId/
+
+# MongoDB
+The project uses MongoDB to store user information and recipe information.
+https://cloud.mongodb.com/
+
 ## Testing
 In this section, you need to convince the assessor that you have conducted enough testing to legitimately believe that the site works well. Essentially, in this part you will want to go over all of your user stories from the UX section and ensure that they all work as intended, with the project providing an easy and straightforward way for the users to achieve their goals.
 
