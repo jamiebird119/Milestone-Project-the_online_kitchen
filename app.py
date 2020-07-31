@@ -122,17 +122,22 @@ def login():
     user_details = user.find_one(user_login)
     password_check = check_password_hash(
         user_details["hashed_password"], request.form.get('password').lower())
-    if password_check:
-        session["username"] = request.form.get("username")
-        return render_template('userhome.html',
-                               user=user_details,
-                               recipes=mongo.db.recipes.find(
-                                   {"added_by": username}),
-                               username=session["username"])
-    else:
+    if not user_details:
         alert = "Username or password not recognised. Please try again."
         return render_template('index.html',
                                alert=alert)
+    else:
+        if password_check:
+            session["username"] = request.form.get("username")
+            return render_template('userhome.html',
+                                   user=user_details,
+                                   recipes=mongo.db.recipes.find(
+                                       {"added_by": username}),
+                                   username=session["username"])
+        else:
+            alert = "Username or password not recognised. Please try again."
+            return render_template('index.html',
+                                   alert=alert)
 
 
 @app.route('/add_favourite/<recipe_name>', methods=["POST"])
