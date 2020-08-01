@@ -50,3 +50,24 @@ $("a h5").mouseenter(function () {
 $("a h5").mouseleave(function () {
     $(this).removeClass("underline");
 });
+
+function delete_query(el){
+    var recipe = el.id
+    modal = document.getElementById("myModal");
+    content = document.getElementById("query");
+    content.innerHTML += `<span id="added">${recipe}</span>`;
+    button = document.getElementsByClassName("delete_yes")
+    button.id = recipe
+    modal.style.display = "block";
+}
+
+function close_modal(){
+    modal = document.getElementById("myModal");
+    modal.style.display = "none";
+    document.getElementById("added").remove()
+}
+
+function delete_recipe(el){
+    recipe = el.id
+    console.log(recipe)
+}
