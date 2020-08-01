@@ -1,5 +1,9 @@
 {% extends 'loggedin.html' %} {% block content %}
-
+{% if error is defined %}
+    {{error}}
+{% else %}
+    {{message}}
+{% endif %}
 <div class="row">
     <div class="col s6">
         <h4 class="section-header">{{ recipe.recipe_name }}</h4>
