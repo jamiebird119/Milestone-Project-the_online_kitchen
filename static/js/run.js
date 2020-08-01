@@ -53,11 +53,12 @@ $("a h5").mouseleave(function () {
 
 function delete_query(el){
     var recipe = el.id
+    var url = document.getElementById("delete_yes").getAttribute("href").replace("fake_name", recipe)
+    console.log(url)
     modal = document.getElementById("myModal");
     content = document.getElementById("query");
     content.innerHTML += `<span id="added">${recipe}</span>`;
-    button = document.getElementsByClassName("delete_yes")
-    button.id = recipe
+    button = document.getElementById("delete_yes").setAttribute("href", url)
     modal.style.display = "block";
 }
 
@@ -68,6 +69,13 @@ function close_modal(){
 }
 
 function delete_recipe(el){
-    recipe = el.id
-    console.log(recipe)
+    var element = el
+    url_for = element.getAttribute("href")
+    $.ajax({
+        url : url_for,
+        type : "POST",
+        success:function(result){
+            window.location.href = result
+        }
+    })
 }

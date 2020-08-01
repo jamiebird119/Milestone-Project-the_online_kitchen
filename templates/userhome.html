@@ -3,6 +3,11 @@
 <h4 class="section-header welcome">
   Welcome {{ user.first_name.capitalize() }}
 </h4>
+{% if error %}
+{{error}}
+{% else %}
+{{message}}
+{% endif %}
 <!-- Modal from https://www.w3schools.com/howto/howto_css_modals.asp -->
 
       <!-- The Modal -->
@@ -10,7 +15,7 @@
         <!-- Modal content -->
         <div id="query" class="modal-content1">
           <p >Are you sure you want to delete this recipe? </p>
-          <button class="btn-small waves-effect waves-light green delete_yes" onclick="delete_recipe()"> Yes </button>
+          <button id="delete_yes" class="btn-small waves-effect waves-light green" onclick="delete_recipe(this)" href="{{url_for('remove_recipe', recipe_name='fake_name')}}"> Yes </button>
           <button class="btn-small waves-effect waves-light red" onclick="close_modal()"> No </button>
         </div>
       </div>

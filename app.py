@@ -1,6 +1,6 @@
 import os
 from os import path
-from flask import Flask, render_template, request, url_for, session
+from flask import Flask, render_template, redirect, request, url_for, session
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -81,9 +81,9 @@ def edit_recipe(recipe_name):
                                "recipe_name": recipe_name}))
 
 
-@app.route("/remove_recipe/<recipe_name>")
+@app.route("/remove_recipe/<recipe_name>", methods=["POST"])
 def remove_recipe(recipe_name):
-    mongo.db.recipes.remove({"recipe_name": recipe_name})
+    # mongo.db.recipes.remove({"recipe_name": recipe_name})
     return render_template('userhome.html',
                            user=mongo.db.users.find_one(
                                {"username": session["username"]}),
@@ -97,28 +97,41 @@ def insertuser_recipe():
     try:
         recipes = mongo.db.recipes
         name = request.form.get("recipe_name")
+        ingredients = zip(request.form.getlist("ingredient"),
+                          request.form.getlist("ingredient_quantity"))
+        method = request.form.get("method").splitlines()
+        difficulty = request.form.get("difficulty")
+        cooking_time = request.form.get("cooking_time")
+        recipe_details = {"recipe_name": name,
+                          "added_by": session['username'],
+                          "method": method,
+                          "ingredients": list(ingredients),
+                          "difficulty": difficulty,
+                          "cooking_time": cooking_time}
+        recipes.insert_one(recipe_details)
+        return render_template('recipe_loggedin.html',
+                               recipe=recipe_details,
+                               user=mongo.db.users.find_one({
+                                   "username": session["username"]}),
+                               message="Recipe successfully added")
+    except Exception as e:
+        recipes = mongo.db.recipes
+        name = request.form.get("recipe_name")
         added_by = request.form.get("added_by")
         ingredients = zip(request.form.getlist("ingredient"),
                           request.form.getlist("ingredient_quantity"))
         method = request.form.get("method").splitlines()
         difficulty = request.form.get("difficulty")
         cooking_time = request.form.get("cooking_time")
-        recipe = {"recipe_name": name, "added_by": added_by.lower(),
-                  "method": method,
-                  "ingredients": list(ingredients),
-                  "difficulty": difficulty,
-                  "cooking_time": cooking_time}
-        recipes.insert_one(recipe)
-        print(method)
-        return render_template('recipe_loggedin.html',
-                               recipe=recipe,
-                               user=mongo.db.users.find_one({
-                                   "username": session["username"]}),
-                               message="Recipe successfully added")
-    except Exception as e:
+        recipe_details = {"recipe_name": name,
+                          "added_by": session['username'],
+                          "method": method,
+                          "ingredients": list(ingredients),
+                          "difficulty": difficulty,
+                          "cooking_time": cooking_time}
         alert = "Error found:" + str(e)
         return render_template('recipe_loggedin.html',
-                               recipe=recipe,
+                               recipe=recipe_details,
                                user=mongo.db.users.find_one({
                                    "username": session["username"]}),
                                error=alert)
@@ -310,4 +323,4 @@ def search():
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
             port=int(os.environ.get('PORT')),
-            debug=False)
+            debug=True)
