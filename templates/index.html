@@ -1,5 +1,5 @@
 {% extends 'base.html' %} {% block content %}
-<p><strong> {{ alert }} </strong></p>
+<p class="badge"><strong>{{alert}}</strong></p>
 <div class="row">
     <p class="intro">
         This is the Online Cookbook. The place to share your personalised recipes and discover new culinary delights.
@@ -36,7 +36,7 @@
     <h4 class="section_heading">Results</h4>
     {% endif %} {% for recipe in search_content %}
     <div class="col s7">
-        <a href="{{url_for('get_recipe', recipe_name=recipe.recipe_name)}}"><h5>{{ recipe.recipe_name }}</h5></a>
+        <a href="{{url_for('get_recipe', recipe_id=recipe._id)}}"><h5>{{ recipe.recipe_name }}</h5></a>
         <p>
             Cooking Time - {{ recipe.cooking_time }} mins <br />
             Difficulty - {{ recipe.difficulty.capitalize() }}
@@ -53,7 +53,7 @@
 
     {% for featured in featured_list %}
     <div class="col s12">
-        <a href="{{url_for('get_recipe', recipe_name=featured.recipe_name)}}"><h5>{{ featured.recipe_name }}</h5></a>
+        <a href="{{url_for('get_recipe', recipe_id=featured._id)}}"><h5>{{ featured.recipe_name }}</h5></a>
         <p>
             Cooking time - {{ featured.cooking_time}} mins <br />
             Added By - {{ featured.added_by }} <br />

@@ -1,12 +1,12 @@
 {% extends 'loggedin.html' %}{% block content %}
 
 <h4 class="section-header welcome">
-  Welcome {{ user.first_name.capitalize() }}
+  Welcome {{ user.first_name.capitalize() }} 
 </h4>
 {% if error %}
 {{error}}
 {% else %}
-{{message}}
+<p class="badge"><strong>{{message}}</strong></p>
 {% endif %}
 <!-- Modal from https://www.w3schools.com/howto/howto_css_modals.asp -->
 
@@ -15,7 +15,7 @@
         <!-- Modal content -->
         <div id="query" class="modal-content1">
           <p >Are you sure you want to delete this recipe? </p>
-          <button id="delete_yes" class="btn-small waves-effect waves-light green" onclick="delete_recipe(this)" href="{{url_for('remove_recipe', recipe_name='fake_name')}}"> Yes </button>
+          <button id="delete_yes" class="btn-small waves-effect waves-light green" onclick="delete_recipe(this)" href="{{url_for('remove_recipe', recipe_id='fake_id')}}"> Yes </button>
           <button class="btn-small waves-effect waves-light red" onclick="close_modal()"> No </button>
         </div>
       </div>
@@ -51,7 +51,7 @@
   <h5 class="section-header">Results</h5>
   {% endif %} {% for recipe in search_content %}
   <div class="col s7">
-    <a> {{ recipe.recipe_name }} </a>
+    <a href="{{url_for('get_loggedinrecipe', recipe_id=recipe._id)}}"> <h6>{{ recipe.recipe_name }} </h6></a>
     <p>
       Cooking Time - {{ recipe.cooking_time }} mins <br />
       Difficulty - {{ recipe.difficulty.capitalize() }}
@@ -73,9 +73,9 @@
     <div class="row">
       <div class="col s6">
         <a
-          href="{{url_for('get_loggedinrecipe', recipe_name=recipe.recipe_name).replace('fake_name', recipe.recipe_name)}}"
-        >
-          {{ recipe.recipe_name }}
+          href="{{url_for('get_loggedinrecipe', recipe_id=recipe._id)}}"
+        ><h6>
+          {{ recipe.recipe_name }}</h6>
         </a>
         <p>
           Cooking time - {{ recipe.cooking_time }} mins <br />
@@ -85,7 +85,7 @@
       <div class="col s3">
         <a
           class="btn-small waves-effect waves-light cmd-button"
-          href="{{url_for('edit_recipe', recipe_name=recipe.recipe_name)}}"
+          href="{{url_for('edit_recipe', recipe_id=recipe._id)}}"
           methods="POST"
         >
           Edit
@@ -94,8 +94,9 @@
       </div>
       <div class="col s3">
         <a
-          id="{{recipe.recipe_name}}"
+          id="{{recipe._id}}"
           class="btn-small waves-effect waves-light indigo cmd-button delete"
+          name="{{recipe.recipe_name}}"
           onclick="delete_query(this)"
         >
           Delete
@@ -121,8 +122,8 @@
   <div class="row">
     <div class="col s6">
       <li>
-        <a href="{{url_for('get_loggedinrecipe', recipe_name=recipe)}}">
-          {{ recipe }}
+        <a href="{{url_for('get_loggedinrecipe', recipe_id=recipe[1])}}"><h6>
+          {{ recipe[0] }}</h6>
         </a>
       </li>
     </div>
@@ -130,8 +131,8 @@
     <div class="col s4">
       <a
         class="btn waves-effect waves-light center orange"
-        href="{{url_for('remove_favourite', recipe_name=recipe)}}"
-        method="POST"
+        href="{{url_for('remove_favourite', recipe_id=recipe[1])}}"
+        type="POST"
       >
         Remove
         <i class="material-icons right">cancel</i>
@@ -143,4 +144,24 @@
 </ul>
 {% else %}
 <p>You have not currently favourited any recipes</p>
-{% endif %} {% endblock %}
+{% endif %} 
+
+<div class="row">
+    <div class="col s6">
+        <h5 class="section_heading">Featured Recipes</h5>
+    </div>
+
+    {% for featured in featured_list %}
+    <div class="col s12">
+        <a href="{{url_for('get_recipe', recipe_id=featured._id)}}"><h6>{{ featured.recipe_name }}</h6></a>
+        <p>
+            Cooking time - {{ featured.cooking_time}} mins <br />
+            Added By - {{ featured.added_by }} <br />
+            Difficulty - {{ featured.difficulty }}
+        </p>
+    </div>
+    <div class="col s12 divider"></div>
+    {% endfor %}
+</div>
+{% endblock %}
+

@@ -53,11 +53,11 @@ $("a h5").mouseleave(function () {
 
 function delete_query(el){
     var recipe = el.id
-    var url = document.getElementById("delete_yes").getAttribute("href").replace("fake_name", recipe)
-    console.log(url)
+    var name = el.name
+    var url = document.getElementById("delete_yes").getAttribute("href").replace("fake_id", recipe)
     modal = document.getElementById("myModal");
     content = document.getElementById("query");
-    content.innerHTML += `<span id="added">${recipe}</span>`;
+    content.innerHTML += `<span id="added">${name}</span>`;
     button = document.getElementById("delete_yes").setAttribute("href", url)
     modal.style.display = "block";
 }

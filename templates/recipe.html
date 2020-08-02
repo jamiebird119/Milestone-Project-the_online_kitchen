@@ -2,8 +2,8 @@
 {% if error is defined %}
     {{error}}
 {% else %}
-    {{message}}
-{% endif %}
+    <p class="badge"><strong>{{message}}</strong></p>
+
 <div class="row">
     <div class="col s6">
         <h3 class="section-header">{{ recipe.recipe_name }}</h3>

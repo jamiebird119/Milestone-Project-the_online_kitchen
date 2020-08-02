@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% block content %}
 <h4 class="section-header register">Register now to add your own recipes and favourite recipes you like!</h4>
 <div class="alert">
-    <h5><strong> {{ alert }} </strong></h5>
+    <p class="badge"><strong>{{alert}}</strong></p>
 </div>
 <form class="col s12" action="{{ url_for('adduser')}}" method="POST">
     <div class="row">
