@@ -10,7 +10,7 @@
                 <label for="recipe_name">Recipe Name</label>
             </div>
         </div>
-    {% if username in session %}
+    {% if "username" in session %}
     <div class="row">
             <div class="input-field col s8 m6">
                 <input id="added_by_user" name="added_by" value="{{ session.username }}" type="text" class="validate" disabled required />

@@ -60,11 +60,13 @@
 </div>
 <h4 class="section-header">Method</h4>
 <ol>
-    {% for line in recipe.method %} {% if line == '    ' %}
-    <br />
+    {% for line in recipe.method %}
+    {% if line.isspace() %}
+    <br/>
     {% else %}
-    <li>{{line}}</li>
-    {% endif %} {% endfor %}
+    <li> {{- line -}} </li>
+    {% endif %}
+    {% endfor %}
 </ol>
 <script>
     // Saves recipe to favourite in user database - first checks user exists before calling python api
