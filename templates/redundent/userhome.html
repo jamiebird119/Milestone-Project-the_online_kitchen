@@ -116,32 +116,8 @@
 <h5 class="section-header">Favourited Recipes</h5>
 <div class="row"><div class="col s12 divider"></div></div>
 <!-- User can see recipes they favourited here-->
-{% if user.favourites %}
-<ul>
-  {% for recipe in user.favourites %}
-  <div class="row">
-    <div class="col s6">
-      <li>
-        <a href="{{url_for('get_loggedinrecipe', recipe_id=recipe[1])}}"><h6>
-          {{ recipe[0] }}</h6>
-        </a>
-      </li>
-    </div>
-
-    <div class="col s4">
-      <a
-        class="btn waves-effect waves-light center orange"
-        href="{{url_for('remove_favourite', recipe_id=recipe[1])}}"
-        type="POST"
-      >
-        Remove
-        <i class="material-icons right">cancel</i>
-      </a>
-    </div>
-    <div class="col s12 divider"></div>
-  </div>
-  {% endfor %}
-</ul>
+{% if favourites %}
+{{favourites}}
 {% else %}
 <p>You have not currently favourited any recipes</p>
 {% endif %} 
@@ -153,7 +129,7 @@
 
     {% for featured in featured_list %}
     <div class="col s12">
-        <a href="{{url_for('get_recipe', recipe_id=featured._id)}}"><h6>{{ featured.recipe_name }}</h6></a>
+        <a href="{{url_for('get_loggedinrecipe', recipe_id=featured._id)}}"><h6>{{ featured.recipe_name }}</h6></a>
         <p>
             Cooking time - {{ featured.cooking_time}} mins <br />
             Added By - {{ featured.added_by }} <br />

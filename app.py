@@ -20,8 +20,29 @@ mongo = PyMongo(app)
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template("index.html",
-                           featured_list=mongo.db.recipes.find().limit(5))
+    if "username" in session:
+        username = session["username"]
+        user = mongo.db.users.find_one(
+            {"username": username})
+        if user["favourites"]:
+            favourites = []
+            for item in user["favourites"]:
+                recipe = mongo.db.recipes.find_one({"_id": item})
+                favourites.append([recipe["recipe_name"],
+                                   recipe["_id"]])
+            return render_template('index.html', user=user,
+                                   recipes=mongo.db.recipes.find({
+                                       "added_by": username}),
+                                   favourites=favourites,
+                                   featured_list=mongo.db.recipes.find().limit(5))
+        else:
+            return render_template('index.html', user=user,
+                                   recipes=mongo.db.recipes.find({
+                                       "added_by": username}),
+                                   featured_list=mongo.db.recipes.find().limit(5))
+    else:
+        return render_template("index.html",
+                               featured_list=mongo.db.recipes.find().limit(5))
 
 
 @app.route("/addrecipe")
@@ -34,7 +55,10 @@ def insert_recipe():
     try:
         recipes = mongo.db.recipes
         name = request.form.get("recipe_name")
-        added_by = request.form.get("added_by")
+        if "username" in session:
+            added_by = session["username"]
+        else:
+            added_by = request.form.get("added_by")
         ingredients = zip(request.form.getlist("ingredient"),
                           request.form.getlist("ingredient_quantity"))
         method = request.form.get("method").splitlines()
@@ -57,26 +81,23 @@ def insert_recipe():
 
 @app.route("/get_recipe/<recipe_id>")
 def get_recipe(recipe_id):
-    recipe = mongo.db.recipes.find_one(
-        {"_id": ObjectId(recipe_id)})
-    return render_template('recipe.html',
-                           recipe=recipe,
-                           )
-
-
-@app.route("/get_loggedinrecipe/<recipe_id>")
-def get_loggedinrecipe(recipe_id):
-    recipe = mongo.db.recipes.find_one(
-        {"_id": ObjectId(recipe_id)})
-    return render_template('recipe_loggedin.html',
-                           recipe=recipe,
-                           user=mongo.db.users.find_one({
-                               "username": session["username"]}))
+    if "username" in session:
+        recipe = mongo.db.recipes.find_one(
+            {"_id": ObjectId(recipe_id)})
+        return render_template('recipe.html',
+                               recipe=recipe,
+                               user=mongo.db.users.find_one({
+                                   "username": session["username"]}))
+    else:
+        recipe = mongo.db.recipes.find_one(
+            {"_id": ObjectId(recipe_id)})
+        return render_template('recipe.html',
+                               recipe=recipe,)
 
 
 @app.route("/edit_recipe/<recipe_id>")
 def edit_recipe(recipe_id):
-    return render_template("edit_recipe_loggedin.html",
+    return render_template("edit_recipe.html",
                            recipe=mongo.db.recipes.find_one({
                                "_id": ObjectId(recipe_id)}))
 
@@ -95,59 +116,7 @@ def remove_recipe(recipe_id):
                        username=session["username"],
                        message=error_message)
 
-
-@app.route('/userhomepage/<username>/<message>')
-def userhomepage(username, message):
-    return render_template('userhome.html', user=mongo.db.users.find_one(
-        {"username": username}),
-        recipes=mongo.db.recipes.find({
-            "added_by": username}),
-        message=message,
-        featured_list=mongo.db.recipes.find().limit(5))
-
-
-@app.route("/insertuser_recipe/", methods=["POST"])
-def insertuser_recipe():
-    try:
-        recipes = mongo.db.recipes
-        name = request.form.get("recipe_name")
-        ingredients = zip(request.form.getlist("ingredient"),
-                          request.form.getlist("ingredient_quantity"))
-        method = request.form.get("method").splitlines()
-        difficulty = request.form.get("difficulty")
-        cooking_time = request.form.get("cooking_time")
-        recipe_details = {"recipe_name": name,
-                          "added_by": session['username'],
-                          "method": method,
-                          "ingredients": list(ingredients),
-                          "difficulty": difficulty,
-                          "cooking_time": cooking_time}
-        recipes.insert_one(recipe_details)
-        return render_template('recipe_loggedin.html',
-                               recipe=recipe_details,
-                               user=mongo.db.users.find_one({
-                                   "username": session["username"]}),
-                               message="Recipe successfully added")
-    except Exception as e:
-        recipes = mongo.db.recipes
-        name = request.form.get("recipe_name")
-        ingredients = zip(request.form.getlist("ingredient"),
-                          request.form.getlist("ingredient_quantity"))
-        method = request.form.get("method").splitlines()
-        difficulty = request.form.get("difficulty")
-        cooking_time = request.form.get("cooking_time")
-        recipe_details = {"recipe_name": name,
-                          "added_by": session['username'],
-                          "method": method,
-                          "ingredients": list(ingredients),
-                          "difficulty": difficulty,
-                          "cooking_time": cooking_time}
-        alert = "Error found:" + str(e)
-        return render_template('recipe_loggedin.html',
-                               recipe=recipe_details,
-                               user=mongo.db.users.find_one({
-                                   "username": session["username"]}),
-                               error=alert)
+# ------------------------------------------------ Here down
 
 
 @app.route('/register')
@@ -171,13 +140,26 @@ def login():
                                    alert=alert)
         else:
             if password_check:
-                session["username"] = request.form.get("username")
-                return render_template('userhome.html',
-                                       user=user_details,
-                                       recipes=mongo.db.recipes.find(
-                                           {"added_by": username}),
-                                       username=session["username"],
-                                       featured_list=mongo.db.recipes.find().limit(5))
+                session["username"] = username
+                user = mongo.db.users.find_one({"username": username})
+                if user["favourites"]:
+                    favourites = []
+                    for item in user["favourites"]:
+                        recipe = mongo.db.recipes.find_one({"_id": item})
+                        favourites.append(
+                            [recipe["recipe_name"], recipe["_id"]])
+                        return render_template('index.html',
+                                               user=mongo.db.users.find_one(
+                                                   {"username": username}),
+                                               recipes=mongo.db.recipes.find({
+                                                   "added_by": username}),
+                                               favourites=favourites,
+                                               featured_list=mongo.db.recipes.find().limit(5))
+                else:
+                    return render_template('index.html', user=user,
+                                           recipes=mongo.db.recipes.find({
+                                               "added_by": username}),
+                                           featured_list=mongo.db.recipes.find().limit(5))
             else:
                 alert = "Username or password not recognised. Please try again."
                 return render_template('index.html',
@@ -187,30 +169,49 @@ def login():
         return render_template('index.html', alert=alert)
 
 
-@app.route('/add_favourite/<recipe_id>/<recipe_name>', methods=["POST"])
+@app.route('/add_favourite/<recipe_id>', methods=["POST"])
 def add_favourite(recipe_id, recipe_name):
     username = session["username"]
+    # ------------------------------------------------ TEST CODE IN HERE
+    # -
+    mongo.db.users.find_one_and_update(
+        {"username": username.lower()},
+        {"$push": {"favourites":  ObjectId(recipe_id)}})
     user = mongo.db.users.find_one({"username": username})
-    if "favourites" not in user:
-        mongo.db.users.update({"username": username}, {
-            "$set": {"favourites": [[recipe_name, recipe_id]]}})
-        return render_template('userhome.html',
-                               user=user,
-                               recipes=mongo.db.recipes.find(
-                                   {"added_by": username}),
-                               username=session["username"],
-                               featured_list=mongo.db.recipes.find().limit(5))
+    # -
+    # ------------------------------------------------ ORIGINAL CODE BELOW THIS
+    # username = session["username"]
+    # user = mongo.db.users.find_one({"username": username})
+    # if "favourites" not in user:
+    #     mongo.db.users.update({"username": username}, {
+    #         "$set": {"favourites": [[recipe_name, recipe_id]]}})
+    #     return render_template('userhome.html',
+    #                            user=user,
+    #                            recipes=mongo.db.recipes.find(
+    #                                {"added_by": username}),
+    #                            username=session["username"],
+    #                            featured_list=mongo.db.recipes.find().limit(5))
+    # else:
+    #     favourites = user["favourites"]
+    #     favourites.append([recipe_name, recipe_id])
+    #     mongo.db.users.update_one({"username": username}, {
+    #         "$set": {"favourites": favourites}})
+    if "favourites" in user.keys():
+        favourites = []
+        for item in user.favourites:
+            recipe = mongo.db.recipes.find_one({"_id": item})
+            favourites.push([recipe.recipe_name,
+                             recipe._id])
+            return render_template('userhome.html', user=user,
+                                   recipes=mongo.db.recipes.find({
+                                       "added_by": username}),
+                                   favourites=favourites,
+                                   featured_list=mongo.db.recipes.find().limit(5))
     else:
-        favourites = user["favourites"]
-        favourites.append([recipe_name, recipe_id])
-        mongo.db.users.update_one({"username": username}, {
-            "$set": {"favourites": favourites}})
-    return render_template('userhome.html',
-                           user=user,
-                           recipes=mongo.db.recipes.find(
-                               {"added_by": username}),
-                           username=session["username"],
-                           featured_list=mongo.db.recipes.find().limit(5))
+        return render_template('userhome.html', user=user,
+                               recipes=mongo.db.recipes.find({
+                                   "added_by": username}),
+                               featured_list=mongo.db.recipes.find().limit(5))
 
 
 @app.route('/remove_favourite/<recipe_id>')
@@ -234,7 +235,6 @@ def remove_favourite(recipe_id):
 def adduser():
     user = mongo.db.users
     username = request.form.get("username").lower()
-    print(mongo.db.recipes.find({"added_by": username}))
     if not user.find_one({"username": username}):
         password = request.form.get("password")
         session["username"] = request.form.get("username")
@@ -243,7 +243,7 @@ def adduser():
                    "first_name": request.form.get("first_name").lower(),
                    "last_name": request.form.get("last_name").lower()}
         user.insert_one(details)
-        return render_template("userhome.html",
+        return render_template("index.html",
                                user=details,
                                recipes=mongo.db.recipes.find({
                                    "added_by": username}),
@@ -259,21 +259,6 @@ def logout():
     session.clear()
     return render_template("index.html",
                            featured_list=mongo.db.recipes.find().limit(10))
-
-
-@app.route('/userhome/<username>')
-def userhome(username):
-    return render_template("userhome.html",
-                           user=mongo.db.users.find_one(
-                               {"username": username}),
-                           recipes=mongo.db.recipes.find({
-                               "added_by": username}),
-                           featured_list=mongo.db.recipes.find().limit(5))
-
-
-@app.route('/adduserrecipe')
-def adduserrecipe():
-    return render_template("add_recipe_loggedin.html")
 
 
 @app.route("/updaterecipe/<recipe_id>", methods=["POST"])
@@ -311,26 +296,9 @@ def updaterecipe(recipe_id):
                                error=alert)
 
 
-@app.route("/search_loggedin", methods=["POST"])
-def search_loggedin():
-    variable = request.form.get("variable")
-    search_content = request.form.get("search").lower()
-    if variable == "recipe_name":
-        search_return = mongo.db.recipes.find(
-            {"$text": {"$search": search_content}})
-    else:
-        search_return = mongo.db.recipes.find({variable: search_content})
-    return render_template("userhome.html",
-                           recipes=mongo.db.recipes.find(
-                               {"added_by": session["username"]}),
-                           search_content=search_return,
-                           user=mongo.db.users.find_one({
-                               "username": session["username"]}),
-                           featured_list=mongo.db.recipes.find().limit(5))
-
-
 @app.route("/search", methods=["POST"])
 def search():
+
     variable = request.form.get("variable")
     search_content = request.form.get("search").lower()
     if variable == "recipe_name":
@@ -338,9 +306,18 @@ def search():
             {"$text": {"$search": search_content}})
     else:
         search_return = mongo.db.recipes.find({variable: search_content})
-    return render_template("index.html",
-                           search_content=search_return,
-                           featured_list=mongo.db.recipes.find())
+    if "username" in session:
+        return render_template("userhome.html",
+                               recipes=mongo.db.recipes.find(
+                                   {"added_by": session["username"]}),
+                               search_content=search_return,
+                               user=mongo.db.users.find_one({
+                                   "username": session["username"]}),
+                               featured_list=mongo.db.recipes.find().limit(5))
+    else:
+        return render_template("index.html",
+                               search_content=search_return,
+                               featured_list=mongo.db.recipes.find())
 
 
 if __name__ == '__main__':

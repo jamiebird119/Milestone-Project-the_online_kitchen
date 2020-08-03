@@ -14,11 +14,30 @@
 
     <body>
         <div class="content">
+        {% if "username" in session %}
+        <nav>
+                <div class="nav-wrapper navbar-fixed">
+                    <a href="{{url_for('home', username=session.username)}}" class="brand-logo"> The Online Cookbook</a>
+                    <a data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                    <ul class="right hide-on-med-and-down">
+                        <li><a href="{{url_for('home', username=session.username)}}">Home</a></li>
+                        <li><a href="{{ url_for('addrecipe')}}">Add Recipe</a></li>
+                        <li><a href="{{ url_for('logout')}}">Log Out</a></li>
+                    </ul>
+                </div>
+            </nav>
+            <!-- Side Navbar element taken from https://materializecss.com/navbar.html for use on mobile and tablet-->
+            <ul class="sidenav navbar-fixed" id="mobile-demo">
+                <li><a href="{{url_for('home', username=session.username)}}">Home</a></li>
+                <li><a href="{{ url_for('addrecipe')}}">Add Recipe</a></li>
+                <li><a href="{{ url_for('logout')}}">Log Out</a></li>
+            </ul>
+        {% else %}
             <nav>
                 <!-- Navbar element taken from https://materializecss.com/navbar.html -->
                 <div class="nav-wrapper navbar-fixed">
                     <a href="{{url_for('home')}}" class="brand-logo"> The Online Cookbook</a>
-                    <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                    <a href="#" data-target="mobile-demo1" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 
                     <form action="{{ url_for('login')}}" method="POST">
                         <ul class="right hide-on-med-and-down">
@@ -26,7 +45,7 @@
                                 <input id="username1" name="username" type="text" class="validate" placeholder="Username" required />
                             </li>
                             <li>
-                                <input id="password1" name="password" type="text" class="validate" placeholder="Password" required />
+                                <input id="password1" name="password" type="password" class="validate" placeholder="Password" required />
                             </li>
                             <li>
                                 <!-- Button element taken from https://materializecss.com/buttons.html -->
@@ -42,7 +61,7 @@
                 </div>
             </nav>
             <!--Side Navbar element taken from https://materializecss.com/navbar.html for use on mobile and tablet resolution -->
-            <ul class="sidenav navbar-fixed" id="mobile-demo">
+            <ul class="sidenav navbar-fixed" id="mobile-demo1">
                 <li><a href="{{ url_for('home')}}">Home</a></li>
                 <li><a href="{{ url_for('addrecipe')}}">Add Recipe</a></li>
                 <li><a href="{{url_for('register')}}">Register</a></li>
@@ -62,8 +81,10 @@
                         </ul>
                         </form>
             </ul>
+            {% endif %}
             <div class="row">
                 <div class="col offset-s1 s10 s1-offset m8 offset-m1 container">
+                
                     {% block content %} {% endblock %}
                 </div>
                 <div class="col s0 m3 advert-containers">

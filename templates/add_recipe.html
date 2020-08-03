@@ -10,14 +10,21 @@
                 <label for="recipe_name">Recipe Name</label>
             </div>
         </div>
-
+    {% if username in session %}
+    <div class="row">
+            <div class="input-field col s8 m6">
+                <input id="added_by_user" name="added_by" value="{{ session.username }}" type="text" class="validate" disabled required />
+                <label for="added_by_user">Added by (username)</label>
+            </div>
+        </div>
+    {% else %}
         <div class="row">
             <div class="input-field col s6">
                 <input id="added_by" name="added_by" type="text" class="validate" required />
-                <label for="first_name">Added by (username)</label>
+                <label for="added_by">Added by (username)</label>
             </div>
         </div>
-
+    {% endif %}
         <h5 class="section-header">Ingredients</h5>
         <div class="row">
             <div class="input-field col s4 m5 ingredients original-ingredients">
@@ -56,7 +63,7 @@
         </div>
         <div class="row">
             <div class="input-field col s6">
-                <input id="cooking_time" name="cooking_time" type="text" class="validate" />
+                <input id="cooking_time" name="cooking_time" type="number" class="validate" />
                 <label for="cooking_time">Cooking Time (in mins)</label>
             </div>
         </div>
