@@ -69,6 +69,11 @@
 	{% endfor %}
 
 	{% if recipes %}
+    <div class="row">
+    <div class="col s12">
+    <h4 class="section-header">My Recipes </h4>
+    </div></div>
+    
 	<ul>
 		{% for recipe in recipes %}
 		<!-- User can see recipes they created here-->
@@ -108,7 +113,7 @@
 	<p>You have not currently added any recipes</p>
 	{% endif %}
 	{% if "username" in session %}
-	<h5 class="section-header">Favourited Recipes</h5>
+	<h4 class="section-header">Favourited Recipes</h4>
 	<div class="row">
 		<div class="col s12 divider"></div>
 
@@ -119,11 +124,11 @@
 				<h6> {{item[0]}}</h6>
 			</a></div>
 		<div class="col s4">
-			<a class="btn waves-effect waves-light center orange"
-				href="{{url_for('remove_favourite', recipe_id=item[1])}}" type="POST">
+			<button class="btn waves-effect waves-light center cmd-button orange favourite" type="submit" name="action"
+				 onclick="remove_favourite('{{item[1]}}')" >
 				Remove
 				<i class="material-icons right">cancel</i>
-			</a>
+			</button>
 		</div>
 
 		<div class="col s12 divider"></div>
@@ -154,5 +159,16 @@
 	<div class="col s12 divider"></div>
 	{% endfor %}
 </div>
-
+<script>
+    function remove_favourite(recipe_id){
+        let urlFor;
+        let toastMessage;
+          urlFor = "{{url_for('remove_favourite', recipe_id='fake_id')}}".replace('fake_id', recipe_id)
+          toastMessage = "Recipe removed from favourites"
+        $.ajax({type:'POST', url: urlFor}).done(function(result){
+            window.location.href = result
+            console.log(result)
+        });
+    }
+</script>
 {% endblock %}

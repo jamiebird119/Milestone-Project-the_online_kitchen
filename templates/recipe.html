@@ -12,13 +12,13 @@
         <!-- if statement checks if user has favourites and if recipe is in already and uses corresponding action button -->
         {% if not user.favourites %}
         <!-- Button element taken from https://materializecss.com/buttons.html -->
-        <button class="btn waves-effect waves-light playlist favourite" name="action" onclick="add_favourite('{{recipe.recipe_name}}', '{{recipe._id}}')">
+        <button class="btn waves-effect waves-light playlist favourite" name="action" onclick="add_favourite('{{recipe._id}}')">
             Add Favourite
             <i class="material-icons right">playlist_add</i>
         </button>
         {% else %} 
         {% if recipe._id in user.favourites %}
-        <button class="btn waves-effect waves-light playlist orange favourite" type="submit" name="action" onclick="remove_favourite('{{recipe.recipe_name}}', '{{recipe._id}}')">
+        <button class="btn waves-effect waves-light playlist orange favourite" type="submit" name="action" onclick="remove_favourite('{{recipe._id}}')">
             Remove Favourite
             <br />
             <i class="material-icons center">cancel</i>
@@ -26,7 +26,7 @@
 
         {% else %}
         
-        <button class="btn waves-effect waves-light playlist favourite" type="submit" name="action" onclick="add_favourite('{{recipe.recipe_name}}', '{{recipe._id}}')">
+        <button class="btn waves-effect waves-light playlist favourite" type="submit" name="action" onclick="add_favourite('{{recipe._id}}')">
             Add Favourite
             <i class="material-icons right">playlist_add</i>
         </button>
@@ -70,11 +70,11 @@
 </ol>
 <script>
     // Saves recipe to favourite in user database - first checks user exists before calling python api
-    function add_favourite(recipe_name, recipe_id){
+    function add_favourite(recipe_id){
         let urlFor;
         let toastMessage;
         {% if 'username' in session %}
-            urlFor = "{{url_for('add_favourite', recipe_name='fake_name', recipe_id='fake_id')}}".replace('fake_name', recipe_name).replace('fake_id', recipe_id)
+            urlFor = "{{url_for('add_favourite', recipe_id='fake_id')}}".replace('fake_id', recipe_id)
             toastMessage = "Recipe added to your favourites";
 
         {% else %}
@@ -88,10 +88,10 @@
         });
     }
     // Removes recipe from favourites
-    function remove_favourite(recipe_name,recipe_id){
+    function remove_favourite(recipe_id){
         let urlFor;
         let toastMessage;
-          urlFor = "{{url_for('remove_favourite', recipe_name='fake_name', recipe_id='fake_id')}}".replace('fake_name', recipe_name).replace('fake_id', recipe_id)
+          urlFor = "{{url_for('remove_favourite', recipe_id='fake_id')}}".replace('fake_id', recipe_id)
           toastMessage = "Recipe removed from favourites"
         $.ajax({type:'POST', url: urlFor}).done(function(){
             alert(toastMessage)
