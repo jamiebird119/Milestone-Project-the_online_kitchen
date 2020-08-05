@@ -4,12 +4,39 @@ The Online Kitchen is a food blog site created for users to share and explore cu
 or wanting to share a long held secret family recipe the site has something for everyone and is driven by user created content. Aside from this it also contains 
 advertising for Global Knives, professional chef knives for use at home.
 
+## Table of Content
+1. [**UX**](#ux)
+    - [**User Stories**](#user-stories)
+    - [**Design**](#design)
+        - [**Colour Scheme**](#colour-scheme)
+        - [**Wireframes**](#wireframes)
+        - [**Icons**](#icons)
+
+2. [**Features**](#features)
+    - [**Existing Features**](#existing-features)
+    - [**Features left to implement**](#features-left-to-implement)
+    - [**Technologies Used**](#technologies-used)
+3. [**Testing**](#testing)
+
+4. [**Deployment**](#deployment)
+
+5. [**Credits**](#credits)
+
+6. [**Content**](#content)
+
+7. [**Media**](#media)
+
+8. [**Acknowledgements**](#acknowledgements)
+
+
 ## UX
 
 The website was mainly aimed at people who like cooking and like food and have experience with the former. However, with the addition of the difficulty rating 
 for each recipe, it is hoped that it will also cater to a novice home cook as well. With an easy to use search function there are many ways to search other users content and 
 to then add that content to a list of favourites, meaning a user can easily come back to it. Adding a recipe is easy and can be done by guest users and registered users alike hopefully keeping a broad 
 range of content available to all. 
+
+### User Stories
 
 * As a novice in the kitchen, I want to find a recipe that is easy, so that I can practice and improve my skills. 
 
@@ -23,7 +50,8 @@ range of content available to all.
 
 * As a cooking equipment supplier, I want to increase the outreach of my brand, so that I can boost sales and revenue. 
 
-As a user type, I want to perform an action, so that I can achieve a goal.
+* As a general user, I want to view the site on many forms of devices including mobile, desktop and tablet.
+
 This section is also where you would share links to any wireframes, mockups, diagrams etc. that you created as part of the design process. These files should themselves either be included as a pdf file in the project itself (in an separate directory), or just hosted elsewhere online and can be in any format that is viewable inside the browser.
 
 ## Features
@@ -71,31 +99,31 @@ Adding preparation time to the recipe information.
 ## Technologies Used
 In this section, you should mention all of the languages, frameworks, libraries, and any other tools that you have used to construct this project. For each, provide its name, a link to its official site and a short sentence of why it was used.
 
-# JQuery
+### JQuery
 The project uses JQuery to simplify DOM manipulation.
 https://jquery.com/
 
-# Materialize JS and CSS 
+### Materialize JS and CSS 
 The project uses materialize to aid content development
 http://materializecss.com/
 
-# Flask
+### Flask
 The project uses the flask micro framework to provide background functionality and routing
 https://en.wikipedia.org/wiki/Flask_(web_framework)
 
-# Flask PyMongo
+### Flask PyMongo
 The project uses Flask.pymongo to allow flask to interact with the database collection.
 https://flask-pymongo.readthedocs.io/en/latest/
 
-# Werkzeug
+### Werkzeug
 The project uses Werkzeug.security to provide hash and salt for password security 
 https://werkzeug.palletsprojects.com/en/1.0.x/utils/
 
-# BSON
+### BSON
 The project uses BSON to interact with cursor ID objects.
 https://docs.mongodb.com/manual/reference/method/ObjectId/
 
-# MongoDB
+### MongoDB
 The project uses MongoDB to store user information and recipe information.
 https://cloud.mongodb.com/
 

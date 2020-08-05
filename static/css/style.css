@@ -81,7 +81,7 @@ nav .brand-logo{
 }
 
 .section-header{
-    margin: 2rem 0;
+    margin: 4rem 0;
 }
 
  .welcome{
@@ -123,6 +123,9 @@ input{
     margin: 1rem auto;
 }
 
+.recipe_header{
+    color: white;
+}
 /* ---------------------------------------- Modal content --------------------------------------------------------------------*/
 .modal1 {
   display: none; /* Hidden by default */

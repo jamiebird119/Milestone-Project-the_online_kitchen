@@ -91,7 +91,7 @@ def insert_recipe():
                           "added_by": added_by.lower(),
                           "method": method,
                           "ingredients": list(ingredients),
-                          "difficulty": difficulty,
+                          "difficulty": difficulty.capitalize(),
                           "cooking_time": cooking_time}
         print(recipe_details)
         recipes.insert_one(recipe_details)
@@ -133,14 +133,15 @@ def remove_recipe(recipe_id):
     try:
         mongo.db.recipes.remove({"_id": ObjectId(recipe_id)})
         msg = "Recipe Deleted"
+        # remove selected recipe from all user favourites
+        mongo.db.users.update_many({"favourites": recipe_id},
+                                   {'$pull': {"favourites": [recipe_id]}})
         return url_for('home_message',
                        message=msg)
     except Exception as e:
         error_message = "Error found:" + str(e)
         return url_for('home_message',
                        message=error_message)
-
-# ------------------------------------------------ Here down
 
 
 @app.route('/register')
@@ -155,6 +156,7 @@ def login():
         user_login = {"username": request.form.get('username')}
         username = request.form.get('username').lower()
         user_details = user.find_one(user_login)
+        # check password against hash
         password_check = check_password_hash(
             user_details["hashed_password"],
             request.form.get('password').lower())
@@ -222,8 +224,6 @@ def add_favourite(recipe_id):
 
 @ app.route('/remove_favourite/<recipe_id>', methods=["POST"])
 def remove_favourite(recipe_id):
-    user = mongo.db.users.find_one({"username": session["username"]})
-    favourites = user["favourites"]
     mongo.db.users.find_one_and_update(
         {"username": session["username"].lower()},
         {"$pull": {"favourites": ObjectId(recipe_id)}})
