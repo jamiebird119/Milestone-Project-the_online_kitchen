@@ -10,6 +10,7 @@
     </div>
     <div class="col s6">
         <!-- if statement checks if user has favourites and if recipe is in already and uses corresponding action button -->
+        {% if "username" in session %}
         {% if not user.favourites %}
         <!-- Button element taken from https://materializecss.com/buttons.html -->
         <button class="btn waves-effect waves-light playlist favourite" name="action" onclick="add_favourite('{{recipe._id}}')">
@@ -32,6 +33,12 @@
         </button>
 
         {% endif %} {% endif %}
+        {% else %}
+        <button class="btn waves-effect waves-light playlist favourite" type="submit" name="action" onclick="add_favourite('{{recipe._id}}')">
+            Add Favourite
+            <i class="material-icons right">playlist_add</i>
+        </button>
+        {% endif %}
     </div>
 </div>
 
@@ -61,10 +68,9 @@
 <h4 class="section-header">Method</h4>
 <ol>
     {% for line in recipe.method %}
-    {% if line.isspace() %}
-    <br/>
-    {% else %}
+    {% if line.isspace() != 'True' %}
     <li> {{- line -}} </li>
+    <br/>
     {% endif %}
     {% endfor %}
 </ol>

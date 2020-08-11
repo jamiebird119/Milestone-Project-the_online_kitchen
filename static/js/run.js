@@ -68,6 +68,15 @@ function close_modal(){
     document.getElementById("added").remove()
 }
 
+function open_modal(){
+    modal = document.getElementById("myModal");
+    modal.style.display = "block";
+
+}
+function close_info(){
+    modal = document.getElementById("myModal");
+    modal.style.display = "none";
+}
 function delete_recipe(el){
     var element = el
     url_for = element.getAttribute("href")

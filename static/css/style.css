@@ -29,6 +29,7 @@ body{
     padding:0 ;
     width: 100vw;
 }
+
 nav .nav-wrapper {
     padding:0;
 }
@@ -57,7 +58,7 @@ nav .brand-logo{
     text-align: center;
     
 }
-
+/*  ------------------------------------------------- Index Styling ------------------------------------------------------*/
 .intro{
     padding: 1rem 0;
 }
@@ -73,12 +74,6 @@ nav .brand-logo{
     width: 90%;
     margin-top: 1rem;
 }
-.advert-containers a{
-    margin: 2rem auto;
-}
-.advert-side{
-    display: none;
-}
 
 .section-header{
     margin: 4rem 0;
@@ -87,8 +82,19 @@ nav .brand-logo{
  .welcome{
      margin: 2.5rem;
  }
-input{
-    margin: 0 1rem;
+
+/*  ------------------------------------------------- Advertising/Images ------------------------------------------------------*/
+.advert-containers a{
+    margin: 2rem auto;
+}
+.advert-side{
+    display: none;
+}
+
+/*  ------------------------------------------------- Form ------------------------------------------------------*/
+li input{
+    background-color:#fefefe;
+    border: 1px solid black ;
 }
 
 .ingredients{
@@ -138,10 +144,15 @@ input{
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
+.modal_image{
+    width:80%;
+    height:auto;
+}
+
 /* Modal Content/Box */
 .modal-content1 {
   background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
+  margin: 10% auto; /* 15% from the top and centered */
   padding: 20px;
   border: 1px solid #888;
   width: 80%; /* Could be more or less, depending on screen size */

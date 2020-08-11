@@ -36,6 +36,20 @@ for each recipe, it is hoped that it will also cater to a novice home cook as we
 to then add that content to a list of favourites, meaning a user can easily come back to it. Adding a recipe is easy and can be done by guest users and registered users alike hopefully keeping a broad 
 range of content available to all. 
 
+## Design
+
+Balsamic IQ was used to create wireframes of different resolutions for each of the pages on the site. See the link below:  
+[Wireframes](https://balsamiq.cloud/sseslm8/pk2omam)
+
+## Theme 
+Materialize was used to provide general themes on inputs buttons and other features to provide continuity and a consistent style for the site.
+
+## Fonts
+The font chosen is the Helvetica Neue which is the default for Materialize to provide a clean professional look for all pages while being relatively 
+minimal to ease readability
+
+
+
 ### User Stories
 
 * As a novice in the kitchen, I want to find a recipe that is easy, so that I can practice and improve my skills. 
@@ -101,31 +115,31 @@ In this section, you should mention all of the languages, frameworks, libraries,
 
 ### JQuery
 The project uses JQuery to simplify DOM manipulation.
-https://jquery.com/
+[JQUERY](https://jquery.com/)
 
 ### Materialize JS and CSS 
 The project uses materialize to aid content development
-http://materializecss.com/
+[Materialize](http://materializecss.com/)
 
 ### Flask
 The project uses the flask micro framework to provide background functionality and routing
-https://en.wikipedia.org/wiki/Flask_(web_framework)
+[Flask](https://en.wikipedia.org/wiki/Flask_(web_framework))
 
 ### Flask PyMongo
 The project uses Flask.pymongo to allow flask to interact with the database collection.
-https://flask-pymongo.readthedocs.io/en/latest/
+[Flask Pymongo](https://flask-pymongo.readthedocs.io/en/latest/)
 
 ### Werkzeug
 The project uses Werkzeug.security to provide hash and salt for password security 
-https://werkzeug.palletsprojects.com/en/1.0.x/utils/
+[Werkzeug](https://werkzeug.palletsprojects.com/en/1.0.x/utils/)
 
 ### BSON
 The project uses BSON to interact with cursor ID objects.
-https://docs.mongodb.com/manual/reference/method/ObjectId/
+[BSON](https://docs.mongodb.com/manual/reference/method/ObjectId/)
 
 ### MongoDB
 The project uses MongoDB to store user information and recipe information.
-https://cloud.mongodb.com/
+[MongoDB](https://cloud.mongodb.com/)
 
 ## Testing
 In this section, you need to convince the assessor that you have conducted enough testing to legitimately believe that the site works well. Essentially, in this part you will want to go over all of your user stories from the UX section and ensure that they all work as intended, with the project providing an easy and straightforward way for the users to achieve their goals.
@@ -140,6 +154,8 @@ Try to submit the empty form and verify that an error message about the required
 Try to submit the form with an invalid email address and verify that a relevant error message appears
 Try to submit the form with all inputs valid and verify that a success message appears.
 In addition, you should mention in this section how your project looks and works on different browsers and screen sizes.
+
+
 
 You should also mention in this section any interesting bugs or problems you discovered during your testing, even if you haven't addressed them yet.
 
