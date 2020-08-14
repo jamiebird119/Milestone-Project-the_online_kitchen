@@ -165,15 +165,15 @@ def login():
         user_login = {"username": request.form.get('username')}
         username = request.form.get('username').lower()
         user_details = user.find_one(user_login)
-        # check password against hash
-        password_check = check_password_hash(
-            user_details["hashed_password"],
-            request.form.get('password').lower())
-        if len(user_details) == 0:
+        if user_details is None:
             alert = "Username or password not recognised. Please try again."
             return render_template('index.html',
                                    alert=alert)
+        # check password against hash
         else:
+            password_check = check_password_hash(
+                user_details["hashed_password"],
+                request.form.get('password').lower())
             if password_check:
                 session["username"] = username
                 user = mongo.db.users.find_one({"username": username})
