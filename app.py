@@ -25,7 +25,8 @@ def home():
         username = session["username"]
         user = mongo.db.users.find_one(
             {"username": username})
-        if user["favourites"]:
+        print(username)
+        if "favourites" in user:
             favourites = []
             for item in user["favourites"]:
                 recipe = mongo.db.recipes.find_one({"_id": item})
@@ -247,11 +248,12 @@ def adduser():
     username = request.form.get("username").lower()
     if not user.find_one({"username": username}):
         password = request.form.get("password")
-        session["username"] = request.form.get("username")
+        session["username"] = request.form.get("username").lower()
         details = {"username": username,
                    "hashed_password": generate_password_hash(password.lower()),
                    "first_name": request.form.get("first_name").lower(),
-                   "last_name": request.form.get("last_name").lower()}
+                   "last_name": request.form.get("last_name").lower(),
+                   "favourites": []}
         user.insert_one(details)
         return render_template("index.html",
                                user=details,
@@ -333,4 +335,4 @@ def search():
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
             port=int(os.environ.get('PORT')),
-            debug=False)
+            debug=True)

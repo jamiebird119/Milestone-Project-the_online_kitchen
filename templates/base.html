@@ -20,7 +20,7 @@
                     <a href="{{url_for('home', username=session.username)}}" class="brand-logo"> The Online Cookbook</a>
                     <a data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                     <ul class="right hide-on-med-and-down">
-                        <li><a href="{{url_for('home', username=session.username)}}">Home</a></li>
+                        <li><a href="{{url_for('home')}}">Home</a></li>
                         <li><a href="{{ url_for('addrecipe')}}">Add Recipe</a></li>
                         <li><a href="{{ url_for('logout')}}">Log Out</a></li>
                     </ul>
@@ -28,7 +28,7 @@
             </nav>
             <!-- Side Navbar element taken from https://materializecss.com/navbar.html for use on mobile and tablet-->
             <ul class="sidenav navbar-fixed" id="mobile-demo">
-                <li><a href="{{url_for('home', username=session.username)}}">Home</a></li>
+                <li><a href="{{url_for('home')}}">Home</a></li>
                 <li><a href="{{ url_for('addrecipe')}}">Add Recipe</a></li>
                 <li><a href="{{ url_for('logout')}}">Log Out</a></li>
             </ul>

@@ -201,6 +201,7 @@ The project uses MongoDB to store user information and recipe information.
 - An error found when inserting a recipe when not logged in (as no session variable). Altered routing to fix. 
 - Login error found when entering an incorrect username, got an exception of NoneType error. Easily fixed by altering app routing. 
 - Side Nav not working originally due to incorrect loading of external libraries. Rearranged ordering and working correctly. 
+- A bug with the login called by registering (user is automatically logged in). The username was not lower case so giving an error when retrieving user details. 
 
 ## Deployment
 The Project was deployed to [*Heroku*](https://the-online-cookbookjb.herokuapp.com/) using the following stages.
