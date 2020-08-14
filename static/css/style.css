@@ -128,7 +128,7 @@ nav .brand-logo{
 .recipe_header{
     color: white;
 }
-/* ---------------------------------------- Modal content --------------------------------------------------------------------*/
+/* ---------------------------------------- Modal content/ from https://www.w3schools.com/howto/howto_css_modals.asp--------------------------------------------------------------------*/
 .modal1 {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
