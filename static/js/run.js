@@ -53,13 +53,13 @@ $("a h5").mouseleave(function () {
 
 // Activated modal to ensure user wants to delete recipe. Gives modal button url value of RECIPE_ID of which recipe is to be deleted each time depending on recipe clicked. 
 function delete_query(el){
-    var recipe = el.id
-    var name = el.name
-    var url = document.getElementById("delete_yes").getAttribute("href").replace("fake_id", recipe)
+    var recipe = el.id;
+    var name = el.name;
+    var url = document.getElementById("delete_yes").getAttribute("href").replace("fake_id", recipe);
     modal = document.getElementById("myModal");
     content = document.getElementById("query");
     content.innerHTML += `<span id="added">${name}</span>`;
-    button = document.getElementById("delete_yes").setAttribute("href", url)
+    button = document.getElementById("delete_yes").setAttribute("href", url);
     modal.style.display = "block";
 }
 
@@ -67,7 +67,7 @@ function delete_query(el){
 function close_modal(){
     modal = document.getElementById("myModal");
     modal.style.display = "none";
-    document.getElementById("added").remove()
+    document.getElementById("added").remove();
 }
 
 // opens information modal on addrecipe page
@@ -85,13 +85,13 @@ function close_info(){
 
 // Ajax function for deleting recipe
 function delete_recipe(el){
-    var element = el
-    url_for = element.getAttribute("href")
+    var element = el;
+    url_for = element.getAttribute("href");
     $.ajax({
         url : url_for,
         type : "POST",
         success:function(result){
-            window.location.href = result
+            window.location.href = result;
         }
-    })
+    });
 }
