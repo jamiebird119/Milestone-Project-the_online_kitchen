@@ -1,6 +1,7 @@
 import os
 from os import path
-from flask import Flask, render_template, redirect, request, url_for, session
+from flask import Flask, render_template, \
+                  request, url_for, session
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
