@@ -51,6 +51,7 @@ $("a h5").mouseleave(function () {
     $(this).removeClass("underline");
 });
 
+// Activated modal to ensure user wants to delete recipe. Gives modal button url value of RECIPE_ID of which recipe is to be deleted each time depending on recipe clicked. 
 function delete_query(el){
     var recipe = el.id
     var name = el.name
@@ -62,21 +63,27 @@ function delete_query(el){
     modal.style.display = "block";
 }
 
+// close modal if user doesnt want to delete
 function close_modal(){
     modal = document.getElementById("myModal");
     modal.style.display = "none";
     document.getElementById("added").remove()
 }
 
+// opens information modal on addrecipe page
 function open_modal(){
     modal = document.getElementById("myModal");
     modal.style.display = "block";
 
 }
+
+// close info modal
 function close_info(){
     modal = document.getElementById("myModal");
     modal.style.display = "none";
 }
+
+// Ajax function for deleting recipe
 function delete_recipe(el){
     var element = el
     url_for = element.getAttribute("href")

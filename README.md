@@ -22,7 +22,6 @@ advertising for Global Knives, professional chef knives for use at home.
 
 5. [**Credits**](#credits)
 
-6. [**Content**](#content)
 
 7. [**Media**](#media)
 
@@ -36,18 +35,17 @@ for each recipe, it is hoped that it will also cater to a novice home cook as we
 to then add that content to a list of favourites, meaning a user can easily come back to it. Adding a recipe is easy and can be done by guest users and registered users alike hopefully keeping a broad 
 range of content available to all. 
 
-## Design
+### Design
 
 Balsamic IQ was used to create wireframes of different resolutions for each of the pages on the site. See the link below:  
 [Wireframes](https://balsamiq.cloud/sseslm8/pk2omam)
 
-## Theme 
+### Theme 
 Materialize was used to provide general themes on inputs buttons and other features to provide continuity and a consistent style for the site.
 
-## Fonts
+### Fonts
 The font chosen is the Helvetica Neue which is the default for Materialize to provide a clean professional look for all pages while being relatively 
 minimal to ease readability
-
 
 
 ### User Stories
@@ -66,7 +64,6 @@ minimal to ease readability
 
 * As a general user, I want to view the site on many forms of devices including mobile, desktop and tablet.
 
-This section is also where you would share links to any wireframes, mockups, diagrams etc. that you created as part of the design process. These files should themselves either be included as a pdf file in the project itself (in an separate directory), or just hosted elsewhere online and can be in any format that is viewable inside the browser.
 
 ## Features
 Featured recipes - A selection of up to 10 random recipes are displayed on the user home page.
@@ -111,7 +108,6 @@ Recommended recipes based off members previous searches/ a user rating system.
 Adding preparation time to the recipe information. 
 
 ## Technologies Used
-In this section, you should mention all of the languages, frameworks, libraries, and any other tools that you have used to construct this project. For each, provide its name, a link to its official site and a short sentence of why it was used.
 
 ### JQuery
 The project uses JQuery to simplify DOM manipulation.
@@ -142,42 +138,98 @@ The project uses MongoDB to store user information and recipe information.
 [MongoDB](https://cloud.mongodb.com/)
 
 ## Testing
-In this section, you need to convince the assessor that you have conducted enough testing to legitimately believe that the site works well. Essentially, in this part you will want to go over all of your user stories from the UX section and ensure that they all work as intended, with the project providing an easy and straightforward way for the users to achieve their goals.
 
-Whenever it is feasible, prefer to automate your tests, and if you've done so, provide a brief explanation of your approach, link to the test file(s) and explain how to run them.
+### Registration 
+- Go to 'registration' page.
+- Try to submit empty form and confirmed alert message for fields required
+- Submit the form with previously used details and confirmed message saying 'Username exists already'.
+- Entered unique username and password and confirmed success message and successful loading of index page with session variable. 
 
-For any scenarios that have not been automated, test the user stories manually and provide as much detail as is relevant. A particularly useful form for describing your testing process is via scenarios, such as:
+### Logout/Login
+- Click 'logout' button and confirm removal of session variable.
+- Rentered details incorrectly and confirmed error message prompting user to enter correct details
+- Enter correct username and password and confirm loading of index with session username. 
 
-Contact form:
-Go to the "Contact Us" page
-Try to submit the empty form and verify that an error message about the required fields appears
-Try to submit the form with an invalid email address and verify that a relevant error message appears
-Try to submit the form with all inputs valid and verify that a success message appears.
-In addition, you should mention in this section how your project looks and works on different browsers and screen sizes.
+### Add Recipe
+- Go to 'add recipe' page confirming if user logged in then addedby field is prepopulated by session variable.
+- Attempt to submit blank form and confirm required user prompt.
+- Complete form and confirm success message and loading of recipe page. 
 
+### Edit Recipe
+- Go to home page and click edit button on test recipe.
+- Confirm edit form correctly loading with current data in each field.
+- Alter form accordingly and click submit, confirming success message and changes applied.
 
+### Delete Recipe 
+- Go to home page and click delete button next to test recipe. 
+- Confirm that pop-up modal appears with query asking user if they are sure they want to delete said recipe.
+- Click no to confirm closing of modal. 
+- Attempt above again clicking 'yes' to confirm deletion of test recipe. 
+- Confirm success message and recipe no longer appearing on user page.
 
-You should also mention in this section any interesting bugs or problems you discovered during your testing, even if you haven't addressed them yet.
+### Recipe Search 
+- Go to home page.
+- Enter select variable of name and enter 'Eggs'.
+- Confirm on clicking search that a text index search of database occurs and loads any recipe with Eggs in the title.
+- Index page is reloaded with results shown. 
 
-If this section grows too long, you may want to split it off into a separate file and link to it from here.
+### Favourite Recipe
+- Go to specific recipe page (in this case Eggs Benedict) from search function.
+- With no session variable attempt to click 'add to favourites'. Confirm error message prompting user to log in.
+- Log in and navigate to same page. 
+- Click add to favourites and confirm success message. On returning to home page confirm recipe in favourites section.
+
+### Remove Favourite
+- Go to specific recipe page (again Eggs Benedict) and confirm that button now shows as remove from favourites.
+- Click remove from favourites on recipe page and confirm success message.
+- (re-added to favourites to test second method) Return to user home page and click 'remove' button in favourites section and confirm success message and home page reload without recipe in favourites.
+
+### Nav Elements
+- During the above testing each nav element was attempting to ensure routing successful.
+- Mobile resolution was then used and the collapsible side nav was confirmed to correctly toggle on user click.
+- Each nav link was then attempted to ensure correct routing. 
+
+### Responsiveness
+- The site was tested on various mobile, tablet and desktop resolutions to ensure no horizontal scrolling and correct loading of features.
+- Mobile and vertical tablet views use a collapsible navbar in order to effectively utilise space.
+- Advertising elements are also altered from vertical to a horizontal version when changing between desktop to tablet, with both vertical and horizontal elements being shown on tablet view due to excess space.
+- Generally input fields were editted so as to be of larger width on mobile to increase readability of contents and easy user data entry. 
+- The site was designed using a mobile first approach. 
+
+### Bugs
+- A bug with the method containing blank lines of whitespace was found and fixed. Instructions were also added for the user to ensure information is entered in the correct format to avoid the issue further.
+- An error found when inserting a recipe when not logged in (as no session variable). Altered routing to fix. 
+- Login error found when entering an incorrect username, got an exception of NoneType error. Easily fixed by altering app routing. 
+- Side Nav not working originally due to incorrect loading of external libraries. Rearranged ordering and working correctly. 
 
 ## Deployment
-This section should describe the process you went through to deploy the project to a hosting platform (e.g. GitHub Pages or Heroku).
+The Project was deployed to [*Heroku*](https://the-online-cookbookjb.herokuapp.com/) using the following stages.
+- A requirements.txt file was created using:
+    pip3 freeze --local > requirements.txt 
+- A Procfile was created using:
+    echo web: puthon app.py > Procfile
+- Heroku login was completed and the app was linked:
+    heroku login
+    heroku git : remote -a the-online-cookbookjb
+- A git commit was then completed with the push to heroku. The branch was different to the origin master branch used for development.
+    git commit -m "heroku deployment"
+    git push heroku master
+- Heroku Confi Vars were then set up on the heroku page. The values for :
+    - MONGO_URI
+    - MONGO_DBNAME
+    - Secret key 
+    - Port 
+    - IP 
+Were all added the same as in the developmental version. 
 
-In particular, you should provide all details of the differences between the deployed version and the development version, if any, including:
+To run the code locally use the following command line block:
+    python3 app.py
 
-Different values for environment variables (Heroku Config Vars)?
-Different configuration files?
-Separate git branch?
-In addition, if it is not obvious, you should also describe how to run your code locally.
-
-## Credits
-## Content
-The text for section Y was copied from the Wikipedia article Z
+### Credits
 ## Media
-The photos used in this site were obtained from ...
+The Photos used for advertising were found from  [Global Knives](https://globalknives.uk/)
 ## Acknowledgements
-I received inspiration for this project from X
+I received inspiration for this project from Tim and Susan
 
 
 
